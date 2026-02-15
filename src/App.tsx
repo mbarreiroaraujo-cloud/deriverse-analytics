@@ -9,9 +9,9 @@ import { SettingsPage } from './pages/SettingsPage';
 import { useStore } from './store/useStore';
 
 const pageVariants = {
-  initial: { opacity: 0, y: 12 },
+  initial: { opacity: 0, y: 8 },
   animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -12 },
+  exit: { opacity: 0, y: -8 },
 };
 
 function App() {

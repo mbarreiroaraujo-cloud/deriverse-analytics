@@ -8,11 +8,11 @@ function MetricRow({ label, value, format: fmt }: { label: string; value: number
   switch (fmt) {
     case 'ratio':
       display = value.toFixed(2);
-      color = value >= 1 ? 'text-profit' : value >= 0 ? 'text-text-secondary' : 'text-loss';
+      color = 'text-text-primary';
       break;
     case 'percent':
       display = `${value.toFixed(1)}%`;
-      color = value >= 50 ? 'text-profit' : 'text-loss';
+      color = 'text-text-primary';
       break;
     case 'usd':
       display = `${value >= 0 ? '+' : ''}$${value.toFixed(2)}`;
@@ -48,27 +48,27 @@ export function RollingMetrics() {
   const { metrics } = useStore();
 
   return (
-    <div className="bg-bg-secondary border border-border rounded-xl p-5 card-hover">
-      <div className="mb-4">
-        <h3 className="text-sm font-medium text-text-primary">Rolling Metrics</h3>
+    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20 card-hover">
+      <div className="mb-5">
+        <h3 className="text-sm font-semibold text-text-primary">Rolling Metrics</h3>
         <p className="text-xs text-text-muted mt-0.5">Risk-adjusted performance across time windows</p>
       </div>
 
-      <div className="flex gap-4 divide-x divide-border">
+      <div className="flex gap-4 divide-x divide-border/50">
         <WindowColumn title="7 Day" window={metrics.rolling7d} />
         <WindowColumn title="30 Day" window={metrics.rolling30d} />
         <WindowColumn title="90 Day" window={metrics.rolling90d} />
       </div>
 
-      <div className="mt-4 pt-3 border-t border-border/50">
+      <div className="mt-4 pt-4 border-t border-border/50">
         <div className="grid grid-cols-2 gap-3">
           <div>
             <span className="text-[10px] text-text-muted uppercase block">Max Consecutive Wins</span>
-            <span className="text-sm font-mono text-profit">{metrics.maxConsecutiveWins}</span>
+            <span className="text-sm font-mono text-text-primary">{metrics.maxConsecutiveWins}</span>
           </div>
           <div>
             <span className="text-[10px] text-text-muted uppercase block">Max Consecutive Losses</span>
-            <span className="text-sm font-mono text-loss">{metrics.maxConsecutiveLosses}</span>
+            <span className="text-sm font-mono text-text-primary">{metrics.maxConsecutiveLosses}</span>
           </div>
         </div>
       </div>
