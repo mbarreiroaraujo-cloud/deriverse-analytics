@@ -28,7 +28,7 @@ export function SetupClassifier({ tradeId, current }: SetupClassifierProps) {
             onClick={() => updateJournal(tradeId, { setup: value })}
             className={`px-2 py-0.5 rounded text-[10px] font-medium border transition-all ${
               current === value
-                ? 'bg-accent/15 text-accent border-accent/20 ring-1 ring-accent/30'
+                ? 'bg-bg-tertiary text-text-primary border-border ring-1 ring-accent/30'
                 : 'bg-bg-primary text-text-muted border-border hover:border-text-muted/30'
             }`}
           >

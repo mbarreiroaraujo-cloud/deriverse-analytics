@@ -51,7 +51,7 @@ export function TradeDetail({ trade }: TradeDetailProps) {
           ].map(({ label, value, bold }) => (
             <div key={label} className="flex items-center justify-between">
               <span className="text-xs text-text-muted">{label}</span>
-              <span className={`text-xs font-mono text-loss ${bold ? 'font-medium' : ''}`}>
+              <span className={`text-xs font-mono text-text-primary ${bold ? 'font-medium' : ''}`}>
                 ${Math.abs(value).toFixed(2)}
               </span>
             </div>

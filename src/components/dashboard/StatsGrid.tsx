@@ -23,13 +23,12 @@ export function StatsGrid() {
   const losses = metrics.tradeCount - wins;
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
       <MetricCard
         title="Win Rate"
         value={`${metrics.winRate.toFixed(1)}%`}
         subtitle={`${wins}W / ${losses}L`}
         icon={<Target size={16} />}
-        valueColor={metrics.winRate >= 50 ? 'profit' : 'loss'}
         delay={50}
       />
       <MetricCard
@@ -50,7 +49,6 @@ export function StatsGrid() {
         value={metrics.profitFactor === Infinity ? '\u221E' : metrics.profitFactor.toFixed(2)}
         subtitle="Gross P / Gross L"
         icon={<TrendingUp size={16} />}
-        valueColor={metrics.profitFactor >= 1 ? 'profit' : 'loss'}
         delay={200}
       />
       <MetricCard

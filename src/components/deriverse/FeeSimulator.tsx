@@ -42,13 +42,13 @@ export function FeeSimulator() {
   const roi = subscriptionCost > 0 ? ((savings / subscriptionCost) * 100) : 0;
 
   return (
-    <div className="bg-bg-secondary border border-border rounded-xl p-5 card-hover">
-      <div className="flex items-center gap-2 mb-4">
+    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20 card-hover">
+      <div className="flex items-center gap-2 mb-5">
         <div className="w-8 h-8 rounded-lg bg-accent/20 flex items-center justify-center">
           <Wallet size={16} className="text-accent" />
         </div>
         <div>
-          <h3 className="text-sm font-medium text-text-primary">Deriverse Fee Optimizer</h3>
+          <h3 className="text-sm font-semibold text-text-primary">Deriverse Fee Optimizer</h3>
           <p className="text-xs text-text-muted">Calculate subscription ROI based on your trading</p>
         </div>
       </div>
@@ -62,7 +62,7 @@ export function FeeSimulator() {
             className={`py-2 px-2 rounded-lg text-center transition-all border ${
               selectedTier === i
                 ? 'bg-accent/10 border-accent/30 text-accent'
-                : 'bg-bg-primary border-border text-text-muted hover:border-text-muted/30'
+                : 'bg-bg-primary border-border/50 text-text-muted hover:border-text-muted/30'
             }`}
           >
             <span className="text-[10px] font-medium block">{t.name}</span>
@@ -73,31 +73,31 @@ export function FeeSimulator() {
 
       {/* Comparison */}
       <div className="grid grid-cols-3 gap-3 mb-5">
-        <div className="text-center p-3 bg-bg-primary rounded-lg border border-border">
+        <div className="text-center p-3 bg-bg-primary rounded-lg border border-border/50">
           <span className="text-[10px] text-text-muted uppercase block mb-1">Current Fees</span>
-          <span className="text-lg font-mono font-bold text-loss">${currentFees.toFixed(2)}</span>
+          <span className="text-lg font-mono font-bold text-text-primary">${currentFees.toFixed(2)}</span>
         </div>
         <div className="flex items-center justify-center">
           <ArrowRight size={20} className="text-text-muted" />
         </div>
-        <div className="text-center p-3 bg-bg-primary rounded-lg border border-border">
+        <div className="text-center p-3 bg-bg-primary rounded-lg border border-border/50">
           <span className="text-[10px] text-text-muted uppercase block mb-1">With {tier.name}</span>
-          <span className="text-lg font-mono font-bold text-profit">${totalWithSub.toFixed(2)}</span>
+          <span className="text-lg font-mono font-bold text-accent">${totalWithSub.toFixed(2)}</span>
         </div>
       </div>
 
       {/* Savings highlight */}
       {savings > 0 && (
-        <div className="bg-profit/5 border border-profit/20 rounded-lg p-4 mb-4">
+        <div className="bg-accent/5 border border-accent/20 rounded-lg p-4 mb-4">
           <div className="flex items-center gap-2 mb-2">
-            <TrendingDown size={16} className="text-profit" />
-            <span className="text-sm font-medium text-profit">
+            <TrendingDown size={16} className="text-accent" />
+            <span className="text-sm font-medium text-accent">
               You&apos;d save ${savings.toFixed(2)} with {tier.name}
             </span>
           </div>
           <div className="flex items-center gap-4">
             <span className="text-xs text-text-secondary">
-              ROI: <span className="font-mono text-profit">{roi.toFixed(0)}%</span> on subscription
+              ROI: <span className="font-mono text-accent">{roi.toFixed(0)}%</span> on subscription
             </span>
             <span className="text-xs text-text-muted">
               ({monthsInPeriod}-month period)
@@ -107,7 +107,7 @@ export function FeeSimulator() {
       )}
 
       {/* Breakdown */}
-      <div className="space-y-2 pt-3 border-t border-border/50">
+      <div className="space-y-2 pt-4 border-t border-border/50">
         <span className="text-[10px] text-text-muted uppercase">Fee Breakdown</span>
         {[
           { label: 'Maker fees', current: makerFees, discounted: discountedMaker, discount: tier.makerDiscount },
@@ -118,7 +118,7 @@ export function FeeSimulator() {
           <div key={label} className="flex items-center justify-between">
             <span className="text-xs text-text-muted">{label}</span>
             <div className="flex items-center gap-2">
-              {discount > 0 && <span className="text-[10px] text-profit">-{(discount * 100).toFixed(0)}%</span>}
+              {discount > 0 && <span className="text-[10px] text-accent">-{(discount * 100).toFixed(0)}%</span>}
               {current > 0 && current !== discounted && (
                 <span className="text-xs font-mono text-text-muted line-through">${current.toFixed(2)}</span>
               )}
