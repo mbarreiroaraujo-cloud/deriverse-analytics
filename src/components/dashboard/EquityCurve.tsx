@@ -40,11 +40,11 @@ export function EquityCurve() {
   };
 
   return (
-    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20 card-hover">
-      <div className="flex items-center justify-between mb-5">
+    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-hover">
+      <div className="flex items-center justify-between mb-3 sm:mb-5">
         <div>
-          <h3 className="text-sm font-semibold text-text-primary">Equity Curve</h3>
-          <p className="text-xs text-text-muted mt-0.5">Portfolio value over time with drawdown overlay</p>
+          <h3 className="text-xs sm:text-sm font-semibold text-text-primary">Equity Curve</h3>
+          <p className="text-[10px] sm:text-xs text-text-muted mt-0.5">Portfolio value over time with drawdown overlay</p>
         </div>
         <button
           onClick={() => setShowDrawdown(!showDrawdown)}
@@ -56,9 +56,9 @@ export function EquityCurve() {
         </button>
       </div>
 
-      <div className="h-72">
+      <div className="h-[200px] sm:h-[300px] overflow-hidden rounded-lg">
         <ResponsiveContainer width="100%" height="100%">
-          <ComposedChart data={data} margin={{ top: 5, right: 5, left: 5, bottom: 0 }}>
+          <ComposedChart data={data} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
             <defs>
               <linearGradient id="equityGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="#6366f1" stopOpacity={0.2} />
@@ -80,15 +80,17 @@ export function EquityCurve() {
             <YAxis
               yAxisId="equity"
               orientation="left"
+              width={45}
               tick={{ fontSize: 10, fill: '#4a5568' }}
               tickLine={false}
               axisLine={false}
-              tickFormatter={(val: number) => `$${(val / 1000).toFixed(0)}K`}
+              tickFormatter={(val: number) => val >= 1000 ? `$${(val / 1000).toFixed(0)}K` : `$${val}`}
             />
             {showDrawdown && (
               <YAxis
                 yAxisId="dd"
                 orientation="right"
+                width={45}
                 tick={{ fontSize: 10, fill: '#4a5568' }}
                 tickLine={false}
                 axisLine={false}
@@ -96,7 +98,7 @@ export function EquityCurve() {
                 reversed
               />
             )}
-            <Tooltip content={<CustomTooltip />} />
+            <Tooltip content={<CustomTooltip />} wrapperStyle={{ zIndex: 100 }} />
             <Area
               yAxisId="equity"
               type="monotone"

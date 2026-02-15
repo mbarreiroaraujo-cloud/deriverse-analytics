@@ -14,11 +14,11 @@ export function MarginUtilization() {
   const { bar, text, label } = getUtilColor(utilPercent);
 
   return (
-    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20 card-hover">
-      <div className="flex items-center justify-between mb-5">
+    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-hover">
+      <div className="flex items-center justify-between mb-3 sm:mb-5">
         <div>
-          <h3 className="text-sm font-semibold text-text-primary">Margin Utilization</h3>
-          <p className="text-xs text-text-muted mt-0.5">Portfolio leverage and margin usage</p>
+          <h3 className="text-xs sm:text-sm font-semibold text-text-primary">Margin Utilization</h3>
+          <p className="text-[10px] sm:text-xs text-text-muted mt-0.5">Portfolio leverage and margin usage</p>
         </div>
         <span className={`text-xs px-2 py-0.5 rounded ${text} bg-bg-tertiary border border-border/50`}>{label}</span>
       </div>
@@ -27,7 +27,7 @@ export function MarginUtilization() {
       <div className="mb-4">
         <div className="flex items-center justify-between mb-1">
           <span className="text-xs text-text-muted">Usage</span>
-          <span className={`text-sm font-mono font-medium ${text}`}>{utilPercent.toFixed(1)}%</span>
+          <span className={`text-xs sm:text-sm font-mono font-semibold ${text}`}>{utilPercent.toFixed(1)}%</span>
         </div>
         <div className="h-3 bg-bg-primary rounded-full overflow-hidden">
           <div className={`h-full rounded-full transition-all duration-1000 ${bar}`} style={{ width: `${Math.min(utilPercent, 100)}%` }} />

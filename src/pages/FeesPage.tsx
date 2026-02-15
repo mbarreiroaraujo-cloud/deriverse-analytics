@@ -1,23 +1,44 @@
 import { FilterBar } from '../components/shared/FilterBar';
+import { TabSection } from '../components/shared/TabSection';
 import { FeeAnalysis } from '../components/dashboard/FeeAnalysis';
 import { FeeSimulator } from '../components/deriverse/FeeSimulator';
 import { FundingRatePnL } from '../components/deriverse/FundingRatePnL';
-import { LiquidationProximity } from '../components/deriverse/LiquidationProximity';
 
 export function FeesPage() {
+  const tabs = [
+    {
+      id: 'breakdown',
+      label: 'Breakdown',
+      content: (
+        <div className="space-y-4 sm:space-y-6">
+          <FeeAnalysis />
+        </div>
+      ),
+    },
+    {
+      id: 'optimizer',
+      label: 'Optimizer',
+      content: (
+        <div className="space-y-4 sm:space-y-6">
+          <FeeSimulator />
+        </div>
+      ),
+    },
+    {
+      id: 'funding',
+      label: 'Funding',
+      content: (
+        <div className="space-y-4 sm:space-y-6">
+          <FundingRatePnL />
+        </div>
+      ),
+    },
+  ];
+
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="animate-fade-in">
       <FilterBar />
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <FeeSimulator />
-        <FeeAnalysis />
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <FundingRatePnL />
-        <LiquidationProximity />
-      </div>
+      <TabSection tabs={tabs} defaultTab="breakdown" />
     </div>
   );
 }
