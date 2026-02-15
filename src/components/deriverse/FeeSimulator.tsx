@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Wallet, TrendingDown, ArrowRight } from 'lucide-react';
+import { Wallet, TrendingDown, ArrowRight, Star, Clock } from 'lucide-react';
 import { useStore } from '../../store/useStore';
 
 interface Tier {
@@ -16,6 +16,18 @@ const TIERS: Tier[] = [
   { name: 'Elite', monthlyFee: 499, makerDiscount: 0.7, takerDiscount: 0.75 },
 ];
 
+function calcTierSavings(currentFees: number, makerFees: number, takerFees: number, fundingFees: number, tier: Tier) {
+  const discountedMaker = makerFees * (1 - tier.makerDiscount);
+  const discountedTaker = takerFees * (1 - tier.takerDiscount);
+  const discountedTotal = discountedMaker + discountedTaker + fundingFees;
+  const monthsInPeriod = 3;
+  const subscriptionCost = tier.monthlyFee * monthsInPeriod;
+  const totalWithSub = discountedTotal + subscriptionCost;
+  const savings = currentFees - totalWithSub;
+  const roi = subscriptionCost > 0 ? ((savings / subscriptionCost) * 100) : 0;
+  return { savings, roi, totalWithSub, subscriptionCost, discountedMaker, discountedTaker };
+}
+
 export function FeeSimulator() {
   const { filteredTrades, metrics } = useStore();
   const [selectedTier, setSelectedTier] = useState(2); // Default to Pro
@@ -23,23 +35,26 @@ export function FeeSimulator() {
   const currentFees = metrics.totalFees;
   const tier = TIERS[selectedTier];
 
-  // Calculate savings
   const makerTrades = filteredTrades.filter(t => t.orderType === 'limit');
   const takerTrades = filteredTrades.filter(t => t.orderType !== 'limit');
   const makerFees = makerTrades.reduce((s, t) => s + t.fees.entry + t.fees.exit, 0);
   const takerFees = takerTrades.reduce((s, t) => s + t.fees.entry + t.fees.exit, 0);
-
-  const discountedMaker = makerFees * (1 - tier.makerDiscount);
-  const discountedTaker = takerFees * (1 - tier.takerDiscount);
   const fundingFees = filteredTrades.reduce((s, t) => s + Math.abs(t.fees.funding), 0);
-  const discountedTotal = discountedMaker + discountedTaker + fundingFees;
 
-  // 90-day period, extrapolate monthly cost
-  const monthsInPeriod = 3;
-  const subscriptionCost = tier.monthlyFee * monthsInPeriod;
-  const totalWithSub = discountedTotal + subscriptionCost;
-  const savings = currentFees - totalWithSub;
-  const roi = subscriptionCost > 0 ? ((savings / subscriptionCost) * 100) : 0;
+  const { savings, roi, totalWithSub, subscriptionCost, discountedMaker, discountedTaker } = calcTierSavings(currentFees, makerFees, takerFees, fundingFees, tier);
+
+  // Find best tier (highest savings)
+  const allTierSavings = TIERS.map((t, i) => ({ index: i, ...calcTierSavings(currentFees, makerFees, takerFees, fundingFees, t) }));
+  const bestTier = allTierSavings.reduce((best, curr) => curr.savings > best.savings ? curr : best, allTierSavings[0]);
+
+  // Monthly projection
+  const monthlySavings = savings / 3;
+  const monthlyFees = currentFees / 3;
+
+  // Break-even: how many trades at current rate to recoup subscription
+  const avgFeePerTrade = filteredTrades.length > 0 ? currentFees / filteredTrades.length : 0;
+  const avgDiscountPerTrade = avgFeePerTrade > 0 ? (currentFees - (totalWithSub - subscriptionCost)) / filteredTrades.length : 0;
+  const breakEvenTrades = avgDiscountPerTrade > 0 ? Math.ceil(tier.monthlyFee / avgDiscountPerTrade) : Infinity;
 
   return (
     <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-hover">
@@ -59,12 +74,17 @@ export function FeeSimulator() {
           <button
             key={t.name}
             onClick={() => setSelectedTier(i)}
-            className={`py-2 px-2 rounded-lg text-center transition-all border ${
+            className={`relative py-2 px-2 rounded-lg text-center transition-all border ${
               selectedTier === i
                 ? 'bg-accent/10 border-accent/30 text-accent'
                 : 'bg-bg-primary border-border/50 text-text-muted hover:border-text-muted/30'
             }`}
           >
+            {bestTier.index === i && i > 0 && (
+              <span className="absolute -top-2 left-1/2 -translate-x-1/2 flex items-center gap-0.5 bg-accent text-white text-[8px] font-semibold px-1.5 py-0.5 rounded-full">
+                <Star size={8} /> Best
+              </span>
+            )}
             <span className="text-[10px] font-medium block">{t.name}</span>
             <span className="text-xs font-mono font-medium block mt-0.5">{t.monthlyFee > 0 ? `$${t.monthlyFee}/mo` : 'Free'}</span>
           </button>
@@ -95,13 +115,39 @@ export function FeeSimulator() {
               You&apos;d save ${savings.toFixed(2)} with {tier.name}
             </span>
           </div>
-          <div className="flex items-center gap-4">
-            <span className="text-xs text-text-secondary">
-              ROI: <span className="font-mono text-accent">{roi.toFixed(0)}%</span> on subscription
-            </span>
-            <span className="text-xs text-text-muted">
-              ({monthsInPeriod}-month period)
-            </span>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-3">
+            <div>
+              <span className="text-[10px] text-text-muted uppercase block">ROI</span>
+              <span className="text-xs font-mono font-semibold text-accent">{roi.toFixed(0)}%</span>
+            </div>
+            <div>
+              <span className="text-[10px] text-text-muted uppercase block">Monthly Savings</span>
+              <span className="text-xs font-mono font-semibold text-accent">${monthlySavings.toFixed(0)}/mo</span>
+            </div>
+            {breakEvenTrades < Infinity && (
+              <div className="flex items-start gap-1">
+                <Clock size={10} className="text-text-muted mt-0.5" />
+                <div>
+                  <span className="text-[10px] text-text-muted uppercase block">Break-even</span>
+                  <span className="text-xs font-mono font-semibold text-text-primary">{breakEvenTrades} trades/mo</span>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Monthly projection */}
+      {tier.monthlyFee > 0 && (
+        <div className="bg-bg-primary/50 rounded-lg p-3 mb-4 border border-border/30">
+          <span className="text-[10px] text-text-muted uppercase block mb-2">Monthly Projection</span>
+          <div className="flex items-center justify-between">
+            <span className="text-xs text-text-secondary">Without subscription</span>
+            <span className="text-xs font-mono font-medium text-text-primary">${monthlyFees.toFixed(2)}/mo</span>
+          </div>
+          <div className="flex items-center justify-between mt-1">
+            <span className="text-xs text-text-secondary">With {tier.name}</span>
+            <span className="text-xs font-mono font-medium text-accent">${((totalWithSub) / 3).toFixed(2)}/mo</span>
           </div>
         </div>
       )}

@@ -3,6 +3,23 @@ import type { Trade, Page, FilterState, Instrument, DashboardMetrics, PortfolioS
 import { generateTrades, generatePortfolioState } from '../data/mockGenerator';
 import { calculateMetrics } from '../engine/metrics';
 
+export type ExperienceLevel = 'essential' | 'standard' | 'advanced';
+
+export interface ExperienceSettings {
+  level: ExperienceLevel;
+  showInsightTooltips: boolean;
+  showSmartInsights: boolean;
+  showSavingsBanner: boolean;
+  showTraderProfile: boolean;
+  showEducation: boolean;
+}
+
+const EXPERIENCE_PRESETS: Record<ExperienceLevel, Omit<ExperienceSettings, 'level'>> = {
+  essential: { showInsightTooltips: false, showSmartInsights: false, showSavingsBanner: true, showTraderProfile: false, showEducation: false },
+  standard: { showInsightTooltips: true, showSmartInsights: true, showSavingsBanner: true, showTraderProfile: true, showEducation: true },
+  advanced: { showInsightTooltips: true, showSmartInsights: true, showSavingsBanner: true, showTraderProfile: true, showEducation: true },
+};
+
 interface AppStore {
   // Navigation
   currentPage: Page;
@@ -29,6 +46,11 @@ interface AppStore {
   toggleSidebar: () => void;
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
+
+  // Experience settings
+  experience: ExperienceSettings;
+  setExperienceLevel: (level: ExperienceLevel) => void;
+  setExperienceToggle: (key: keyof Omit<ExperienceSettings, 'level'>, value: boolean) => void;
 
   // Init
   initialize: () => void;
@@ -106,6 +128,10 @@ export const useStore = create<AppStore>((set, get) => ({
   toggleSidebar: () => set(s => ({ sidebarCollapsed: !s.sidebarCollapsed })),
   sidebarOpen: false,
   setSidebarOpen: (open) => set({ sidebarOpen: open }),
+
+  experience: { level: 'standard', ...EXPERIENCE_PRESETS.standard },
+  setExperienceLevel: (level) => set({ experience: { level, ...EXPERIENCE_PRESETS[level] } }),
+  setExperienceToggle: (key, value) => set(s => ({ experience: { ...s.experience, [key]: value } })),
 
   initialize: () => {
     const allTrades = generateTrades(42);
