@@ -68,19 +68,19 @@ export function TradeTable() {
   return (
     <div className="bg-bg-secondary border border-border rounded-xl overflow-hidden">
       {/* Header */}
-      <div className="p-4 border-b border-border flex items-center justify-between">
+      <div className="p-4 border-b border-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
           <h3 className="text-sm font-medium text-text-primary">Trade History</h3>
           <p className="text-xs text-text-muted mt-0.5">{filtered.length} trades</p>
         </div>
-        <div className="relative">
+        <div className="relative w-full sm:w-auto">
           <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-text-muted" />
           <input
             type="text"
             value={search}
             onChange={(e) => { setSearch(e.target.value); setPage(0); }}
             placeholder="Search symbol, instrument..."
-            className="bg-bg-primary border border-border rounded-md pl-8 pr-3 py-1.5 text-xs text-text-primary placeholder:text-text-muted outline-none focus:border-accent/30 w-56"
+            className="bg-bg-primary border border-border rounded-md pl-8 pr-3 py-1.5 text-xs text-text-primary placeholder:text-text-muted outline-none focus:border-accent/30 w-full sm:w-56"
           />
         </div>
       </div>
