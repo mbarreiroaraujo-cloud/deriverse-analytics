@@ -65,18 +65,18 @@ export function InstrumentBreakdown() {
   };
 
   return (
-    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20 card-hover">
-      <div className="flex items-center justify-between mb-5">
+    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-hover">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3 sm:mb-5">
         <div>
-          <h3 className="text-sm font-semibold text-text-primary">Instrument Breakdown</h3>
-          <p className="text-xs text-text-muted mt-0.5">Performance by instrument type</p>
+          <h3 className="text-xs sm:text-sm font-semibold text-text-primary">Instrument Breakdown</h3>
+          <p className="text-[10px] sm:text-xs text-text-muted mt-0.5">Performance by instrument type</p>
         </div>
-        <div className="flex gap-1 bg-bg-primary rounded-lg p-0.5">
+        <div className="flex gap-1 bg-bg-primary rounded-lg p-0.5 overflow-x-auto scrollbar-hide">
           {TABS.map(({ key, label }) => (
             <button
               key={key}
               onClick={() => setActiveTab(key)}
-              className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${
+              className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors whitespace-nowrap ${
                 activeTab === key ? 'bg-accent/15 text-accent' : 'text-text-muted hover:text-text-secondary'
               }`}
             >
@@ -87,14 +87,14 @@ export function InstrumentBreakdown() {
       </div>
 
       {/* Chart */}
-      <div className="h-48 mb-4">
+      <div className="h-[180px] sm:h-[200px] mb-4 overflow-hidden rounded-lg">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={allData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
+          <BarChart data={allData} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#1e2a3a" vertical={false} />
-            <XAxis dataKey="name" tick={{ fontSize: 11, fill: '#8892a4' }} tickLine={false} axisLine={false} />
-            <YAxis tick={{ fontSize: 10, fill: '#4a5568' }} tickLine={false} axisLine={false} tickFormatter={(v: number) => `$${v}`} />
-            <Tooltip content={<CustomTooltip />} />
-            <Bar dataKey="pnl" radius={[4, 4, 0, 0]} animationDuration={1500}>
+            <XAxis dataKey="name" tick={{ fontSize: 10, fill: '#8892a4' }} tickLine={false} axisLine={false} />
+            <YAxis width={45} tick={{ fontSize: 10, fill: '#4a5568' }} tickLine={false} axisLine={false} tickFormatter={(v: number) => v >= 1000 ? `$${(v/1000).toFixed(0)}K` : `$${v}`} />
+            <Tooltip content={<CustomTooltip />} wrapperStyle={{ zIndex: 100 }} />
+            <Bar dataKey="pnl" radius={[4, 4, 0, 0]} maxBarSize={40} animationDuration={1500}>
               {allData.map((entry, i) => (
                 <Cell key={i} fill={entry.color} />
               ))}
@@ -108,11 +108,11 @@ export function InstrumentBreakdown() {
         <div className="max-h-48 overflow-y-auto space-y-1">
           {symbolData.slice(0, 10).map(s => (
             <div key={s.symbol} className="flex items-center justify-between py-1 px-2 rounded hover:bg-bg-tertiary/30">
-              <span className="text-xs font-mono text-text-primary">{s.symbol}</span>
-              <div className="flex items-center gap-4">
-                <span className="text-xs text-text-muted">{s.tradeCount} trades</span>
-                <span className="text-xs font-mono text-text-secondary">{s.winRate.toFixed(1)}%</span>
-                <span className={`text-xs font-mono ${s.pnl >= 0 ? 'text-profit' : 'text-loss'}`}>
+              <span className="text-[11px] sm:text-xs font-mono font-medium text-text-primary">{s.symbol}</span>
+              <div className="flex items-center gap-2 sm:gap-4">
+                <span className="text-[10px] sm:text-xs text-text-muted">{s.tradeCount} trades</span>
+                <span className="text-[10px] sm:text-xs font-mono font-semibold text-text-secondary">{s.winRate.toFixed(1)}%</span>
+                <span className={`text-[10px] sm:text-xs font-mono font-semibold ${s.pnl >= 0 ? 'text-profit' : 'text-loss'}`}>
                   {s.pnl >= 0 ? '+' : ''}${s.pnl.toFixed(2)}
                 </span>
               </div>

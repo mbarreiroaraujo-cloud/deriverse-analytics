@@ -21,10 +21,10 @@ export function GreeksExposure() {
   const maxAbs = Math.max(...entries.map(e => Math.abs(e.value)));
 
   return (
-    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20 card-hover">
-      <div className="mb-5">
-        <h3 className="text-sm font-semibold text-text-primary">Greeks Exposure</h3>
-        <p className="text-xs text-text-muted mt-0.5">Aggregate options risk across portfolio</p>
+    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-hover">
+      <div className="mb-3 sm:mb-5">
+        <h3 className="text-xs sm:text-sm font-semibold text-text-primary">Greeks Exposure</h3>
+        <p className="text-[10px] sm:text-xs text-text-muted mt-0.5">Aggregate options risk across portfolio</p>
       </div>
 
       <div className="space-y-4">
@@ -37,10 +37,10 @@ export function GreeksExposure() {
             <div key={key}>
               <div className="flex items-center justify-between mb-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-mono text-accent">{info.unit}</span>
+                  <span className="text-xs sm:text-sm font-mono font-semibold text-accent">{info.unit}</span>
                   <span className="text-xs text-text-secondary capitalize">{key}</span>
                 </div>
-                <span className="text-sm font-mono font-medium text-text-primary">
+                <span className="text-xs sm:text-sm font-mono font-semibold text-text-primary">
                   {isPositive ? '+' : ''}{value.toFixed(2)}
                 </span>
               </div>

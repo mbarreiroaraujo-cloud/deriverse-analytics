@@ -42,14 +42,14 @@ export function FeeSimulator() {
   const roi = subscriptionCost > 0 ? ((savings / subscriptionCost) * 100) : 0;
 
   return (
-    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20 card-hover">
-      <div className="flex items-center gap-2 mb-5">
+    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-hover">
+      <div className="flex items-center gap-2 mb-3 sm:mb-5">
         <div className="w-8 h-8 rounded-lg bg-accent/20 flex items-center justify-center">
           <Wallet size={16} className="text-accent" />
         </div>
         <div>
-          <h3 className="text-sm font-semibold text-text-primary">Deriverse Fee Optimizer</h3>
-          <p className="text-xs text-text-muted">Calculate subscription ROI based on your trading</p>
+          <h3 className="text-xs sm:text-sm font-semibold text-text-primary">Deriverse Fee Optimizer</h3>
+          <p className="text-[10px] sm:text-xs text-text-muted">Calculate subscription ROI based on your trading</p>
         </div>
       </div>
 
@@ -66,23 +66,23 @@ export function FeeSimulator() {
             }`}
           >
             <span className="text-[10px] font-medium block">{t.name}</span>
-            <span className="text-xs font-mono block mt-0.5">{t.monthlyFee > 0 ? `$${t.monthlyFee}/mo` : 'Free'}</span>
+            <span className="text-xs font-mono font-medium block mt-0.5">{t.monthlyFee > 0 ? `$${t.monthlyFee}/mo` : 'Free'}</span>
           </button>
         ))}
       </div>
 
       {/* Comparison */}
-      <div className="grid grid-cols-3 gap-3 mb-5">
-        <div className="text-center p-3 bg-bg-primary rounded-lg border border-border/50">
+      <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-5">
+        <div className="text-center p-2 sm:p-3 bg-bg-primary rounded-lg border border-border/50">
           <span className="text-[10px] text-text-muted uppercase block mb-1">Current Fees</span>
-          <span className="text-lg font-mono font-bold text-text-primary">${currentFees.toFixed(2)}</span>
+          <span className="text-base sm:text-lg font-mono font-bold text-text-primary">${currentFees.toFixed(2)}</span>
         </div>
         <div className="flex items-center justify-center">
           <ArrowRight size={20} className="text-text-muted" />
         </div>
-        <div className="text-center p-3 bg-bg-primary rounded-lg border border-border/50">
+        <div className="text-center p-2 sm:p-3 bg-bg-primary rounded-lg border border-border/50">
           <span className="text-[10px] text-text-muted uppercase block mb-1">With {tier.name}</span>
-          <span className="text-lg font-mono font-bold text-accent">${totalWithSub.toFixed(2)}</span>
+          <span className="text-base sm:text-lg font-mono font-bold text-accent">${totalWithSub.toFixed(2)}</span>
         </div>
       </div>
 
@@ -122,7 +122,7 @@ export function FeeSimulator() {
               {current > 0 && current !== discounted && (
                 <span className="text-xs font-mono text-text-muted line-through">${current.toFixed(2)}</span>
               )}
-              <span className="text-xs font-mono text-text-primary">${discounted.toFixed(2)}</span>
+              <span className="text-xs font-mono font-medium text-text-primary">${discounted.toFixed(2)}</span>
             </div>
           </div>
         ))}

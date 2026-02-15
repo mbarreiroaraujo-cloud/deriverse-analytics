@@ -19,8 +19,8 @@ export function TradeDetail({ trade }: TradeDetailProps) {
   const priceChange = ((trade.exitPrice - trade.entryPrice) / trade.entryPrice * 100);
 
   return (
-    <div className="bg-bg-tertiary/50 border-t border-border px-6 py-4 animate-fade-in">
-      <div className="grid grid-cols-4 gap-6">
+    <div className="bg-bg-tertiary/50 border-t border-border px-4 sm:px-6 py-4 animate-fade-in">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         {/* Trade Details */}
         <div className="space-y-2">
           <h4 className="text-xs font-medium text-text-secondary uppercase tracking-wider mb-3">Trade Details</h4>

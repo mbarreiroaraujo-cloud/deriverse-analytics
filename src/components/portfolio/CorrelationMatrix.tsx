@@ -78,19 +78,19 @@ export function CorrelationMatrix() {
   if (symbols.length < 2) return null;
 
   return (
-    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20 card-hover">
-      <div className="mb-5">
-        <h3 className="text-sm font-semibold text-text-primary">Correlation Matrix</h3>
-        <p className="text-xs text-text-muted mt-0.5">Daily PnL correlation between instruments</p>
+    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-hover">
+      <div className="mb-3 sm:mb-5">
+        <h3 className="text-xs sm:text-sm font-semibold text-text-primary">Correlation Matrix</h3>
+        <p className="text-[10px] sm:text-xs text-text-muted mt-0.5">Daily PnL correlation between instruments</p>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="w-full">
+      <div className="overflow-x-auto scroll-smooth-touch">
+        <table className="w-full" style={{ minWidth: '240px' }}>
           <thead>
             <tr>
-              <th className="w-20" />
+              <th className="w-14 sm:w-20" />
               {symbols.map(s => (
-                <th key={s} className="text-[10px] font-mono text-text-muted text-center p-1 truncate max-w-[60px]">
+                <th key={s} className="text-[9px] sm:text-[10px] font-mono font-medium text-text-muted text-center p-1 truncate max-w-[50px] sm:max-w-[60px]">
                   {s.split('/')[0].split('-')[0]}
                 </th>
               ))}
@@ -99,13 +99,13 @@ export function CorrelationMatrix() {
           <tbody>
             {symbols.map((sym, i) => (
               <tr key={sym}>
-                <td className="text-[10px] font-mono text-text-muted text-right pr-2 py-1 truncate">
+                <td className="text-[9px] sm:text-[10px] font-mono font-medium text-text-muted text-right pr-2 py-1 truncate">
                   {sym.split('/')[0].split('-')[0]}
                 </td>
                 {symbols.map((_, j) => (
                   <td key={j} className="p-0.5">
-                    <div className={`w-full aspect-square rounded-sm ${getCellColor(matrix[i][j])} flex items-center justify-center`}>
-                      <span className="text-[9px] font-mono text-text-primary/70">
+                    <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-sm ${getCellColor(matrix[i][j])} flex items-center justify-center`}>
+                      <span className="text-[8px] sm:text-[9px] font-mono font-medium text-text-primary/70">
                         {matrix[i][j].toFixed(2)}
                       </span>
                     </div>
