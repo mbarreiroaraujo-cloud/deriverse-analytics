@@ -65,18 +65,18 @@ export function InstrumentBreakdown() {
   };
 
   return (
-    <div className="bg-bg-secondary border border-border rounded-xl p-5 card-hover">
-      <div className="flex items-center justify-between mb-4">
+    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20 card-hover">
+      <div className="flex items-center justify-between mb-5">
         <div>
-          <h3 className="text-sm font-medium text-text-primary">Instrument Breakdown</h3>
+          <h3 className="text-sm font-semibold text-text-primary">Instrument Breakdown</h3>
           <p className="text-xs text-text-muted mt-0.5">Performance by instrument type</p>
         </div>
-        <div className="flex gap-1 bg-bg-primary rounded-md p-0.5">
+        <div className="flex gap-1 bg-bg-primary rounded-lg p-0.5">
           {TABS.map(({ key, label }) => (
             <button
               key={key}
               onClick={() => setActiveTab(key)}
-              className={`px-2.5 py-1 rounded text-xs font-medium transition-colors ${
+              className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${
                 activeTab === key ? 'bg-accent/15 text-accent' : 'text-text-muted hover:text-text-secondary'
               }`}
             >
@@ -104,10 +104,10 @@ export function InstrumentBreakdown() {
       </div>
 
       {/* Symbol table */}
-      <div className="border-t border-border/50 pt-3">
+      <div className="border-t border-border/50 pt-4">
         <div className="max-h-48 overflow-y-auto space-y-1">
           {symbolData.slice(0, 10).map(s => (
-            <div key={s.symbol} className="flex items-center justify-between py-1 px-2 rounded hover:bg-bg-tertiary/50">
+            <div key={s.symbol} className="flex items-center justify-between py-1 px-2 rounded hover:bg-bg-tertiary/30">
               <span className="text-xs font-mono text-text-primary">{s.symbol}</span>
               <div className="flex items-center gap-4">
                 <span className="text-xs text-text-muted">{s.tradeCount} trades</span>

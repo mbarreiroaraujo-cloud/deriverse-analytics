@@ -7,11 +7,11 @@ export function LiquidationProximity() {
   const leveragedPositions = portfolio.positions.filter(p => p.leverage > 1 && p.liquidationPrice > 0);
 
   return (
-    <div className="bg-bg-secondary border border-border rounded-xl p-5 card-hover">
-      <div className="flex items-center gap-2 mb-4">
+    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20 card-hover">
+      <div className="flex items-center gap-2 mb-5">
         <AlertTriangle size={16} className="text-spot" />
         <div>
-          <h3 className="text-sm font-medium text-text-primary">Liquidation Proximity</h3>
+          <h3 className="text-sm font-semibold text-text-primary">Liquidation Proximity</h3>
           <p className="text-xs text-text-muted">Distance to liquidation for leveraged positions</p>
         </div>
       </div>
@@ -26,10 +26,10 @@ export function LiquidationProximity() {
               : ((pos.liquidationPrice - pos.currentPrice) / pos.currentPrice) * 100;
 
             const getColor = (d: number) => {
-              if (d > 30) return { bar: 'bg-profit', text: 'text-profit', status: 'Safe' };
-              if (d > 15) return { bar: 'bg-spot', text: 'text-spot', status: 'Moderate' };
-              if (d > 5) return { bar: 'bg-loss/70', text: 'text-loss', status: 'Warning' };
-              return { bar: 'bg-loss', text: 'text-loss', status: 'Danger' };
+              if (d > 30) return { bar: 'bg-accent/50', text: 'text-accent', status: 'Safe' };
+              if (d > 15) return { bar: 'bg-accent/70', text: 'text-accent-hover', status: 'Moderate' };
+              if (d > 5) return { bar: 'bg-spot/70', text: 'text-spot', status: 'Warning' };
+              return { bar: 'bg-spot', text: 'text-spot', status: 'Danger' };
             };
 
             const { bar, text, status } = getColor(distance);
@@ -38,7 +38,7 @@ export function LiquidationProximity() {
               <div key={i}>
                 <div className="flex items-center justify-between mb-1">
                   <div className="flex items-center gap-2">
-                    <span className={`text-xs font-medium ${pos.side === 'long' ? 'text-profit' : 'text-loss'}`}>
+                    <span className={`text-xs font-medium ${pos.side === 'long' ? 'text-accent' : 'text-spot'}`}>
                       {pos.side === 'long' ? 'L' : 'S'}
                     </span>
                     <span className="text-xs font-mono text-text-primary">{pos.symbol}</span>

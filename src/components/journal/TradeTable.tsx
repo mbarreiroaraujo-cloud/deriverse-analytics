@@ -66,11 +66,11 @@ export function TradeTable() {
   };
 
   return (
-    <div className="bg-bg-secondary border border-border rounded-xl overflow-hidden">
+    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl shadow-sm shadow-black/20 overflow-hidden">
       {/* Header */}
-      <div className="p-4 border-b border-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div className="p-5 border-b border-border/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
-          <h3 className="text-sm font-medium text-text-primary">Trade History</h3>
+          <h3 className="text-sm font-semibold text-text-primary">Trade History</h3>
           <p className="text-xs text-text-muted mt-0.5">{filtered.length} trades</p>
         </div>
         <div className="relative w-full sm:w-auto">
@@ -80,7 +80,7 @@ export function TradeTable() {
             value={search}
             onChange={(e) => { setSearch(e.target.value); setPage(0); }}
             placeholder="Search symbol, instrument..."
-            className="bg-bg-primary border border-border rounded-md pl-8 pr-3 py-1.5 text-xs text-text-primary placeholder:text-text-muted outline-none focus:border-accent/30 w-full sm:w-56"
+            className="bg-bg-primary border border-border/50 rounded-lg pl-8 pr-3 py-1.5 text-xs text-text-primary placeholder:text-text-muted outline-none focus:border-accent/30 w-full sm:w-56"
           />
         </div>
       </div>
@@ -89,7 +89,7 @@ export function TradeTable() {
       <div className="overflow-x-auto">
         <table className="w-full text-xs">
           <thead>
-            <tr className="border-b border-border bg-bg-primary/50">
+            <tr className="border-b border-border/50 bg-bg-primary/50">
               {[
                 { key: 'timestamp' as SortKey, label: 'Date' },
                 { key: 'symbol' as SortKey, label: 'Symbol' },
@@ -100,7 +100,7 @@ export function TradeTable() {
                 <th
                   key={key}
                   onClick={() => toggleSort(key)}
-                  className="px-4 py-2.5 text-left font-medium text-text-muted uppercase tracking-wider cursor-pointer hover:text-text-secondary group"
+                  className="px-4 py-3 text-left font-medium text-text-muted uppercase tracking-wider cursor-pointer hover:text-text-secondary group"
                 >
                   <div className="flex items-center gap-1">
                     {label}
@@ -108,10 +108,10 @@ export function TradeTable() {
                   </div>
                 </th>
               ))}
-              <th className="px-4 py-2.5 text-left font-medium text-text-muted uppercase tracking-wider">Leverage</th>
-              <th className="px-4 py-2.5 text-left font-medium text-text-muted uppercase tracking-wider">Fees</th>
-              <th className="px-4 py-2.5 text-left font-medium text-text-muted uppercase tracking-wider">Order</th>
-              <th className="px-4 py-2.5 text-left font-medium text-text-muted uppercase tracking-wider">Grade</th>
+              <th className="px-4 py-3 text-left font-medium text-text-muted uppercase tracking-wider">Leverage</th>
+              <th className="px-4 py-3 text-left font-medium text-text-muted uppercase tracking-wider">Fees</th>
+              <th className="px-4 py-3 text-left font-medium text-text-muted uppercase tracking-wider">Order</th>
+              <th className="px-4 py-3 text-left font-medium text-text-muted uppercase tracking-wider">Grade</th>
             </tr>
           </thead>
           <tbody>
@@ -129,7 +129,7 @@ export function TradeTable() {
       </div>
 
       {/* Pagination */}
-      <div className="p-3 border-t border-border flex items-center justify-between">
+      <div className="p-4 border-t border-border/50 flex items-center justify-between">
         <span className="text-xs text-text-muted">
           {page * perPage + 1}-{Math.min((page + 1) * perPage, filtered.length)} of {filtered.length}
         </span>
@@ -137,14 +137,14 @@ export function TradeTable() {
           <button
             onClick={() => setPage(p => Math.max(0, p - 1))}
             disabled={page === 0}
-            className="px-2 py-1 text-xs text-text-secondary bg-bg-primary border border-border rounded disabled:opacity-30"
+            className="px-2 py-1 text-xs text-text-secondary bg-bg-primary border border-border/50 rounded-lg disabled:opacity-30"
           >
             Prev
           </button>
           <button
             onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
             disabled={page >= totalPages - 1}
-            className="px-2 py-1 text-xs text-text-secondary bg-bg-primary border border-border rounded disabled:opacity-30"
+            className="px-2 py-1 text-xs text-text-secondary bg-bg-primary border border-border/50 rounded-lg disabled:opacity-30"
           >
             Next
           </button>
@@ -166,35 +166,35 @@ function TradeRow({
     <>
       <tr
         onClick={onToggle}
-        className="border-b border-border/50 cursor-pointer hover:bg-bg-tertiary/50 transition-colors"
+        className="border-b border-border/50 cursor-pointer hover:bg-bg-tertiary/30 transition-colors"
       >
-        <td className="px-4 py-2.5 font-mono text-text-secondary">
+        <td className="px-4 py-3 font-mono text-text-secondary">
           {format(new Date(trade.timestamp), 'MMM dd HH:mm')}
         </td>
-        <td className="px-4 py-2.5 font-mono font-medium text-text-primary">{trade.symbol}</td>
-        <td className={`px-4 py-2.5 ${instrumentColor(trade.instrument)}`}>
+        <td className="px-4 py-3 font-mono font-medium text-text-primary">{trade.symbol}</td>
+        <td className={`px-4 py-3 ${instrumentColor(trade.instrument)}`}>
           <span className="capitalize">{trade.instrument === 'perpetual' ? 'Perp' : trade.instrument}</span>
         </td>
-        <td className="px-4 py-2.5">
-          <span className={`font-mono font-medium ${trade.side === 'long' ? 'text-profit' : 'text-loss'}`}>
+        <td className="px-4 py-3">
+          <span className="font-mono font-medium text-text-secondary">
             {trade.side.toUpperCase()}
           </span>
         </td>
-        <td className="px-4 py-2.5">
+        <td className="px-4 py-3">
           <span className={`font-mono font-medium ${trade.pnl >= 0 ? 'text-profit' : 'text-loss'}`}>
             {trade.pnl >= 0 ? '+' : ''}${trade.pnl.toFixed(2)}
           </span>
         </td>
-        <td className="px-4 py-2.5 font-mono text-text-secondary">{trade.leverage}x</td>
-        <td className="px-4 py-2.5 font-mono text-text-muted">${trade.fees.total.toFixed(2)}</td>
-        <td className="px-4 py-2.5 text-text-secondary capitalize">{trade.orderType}</td>
-        <td className="px-4 py-2.5">
+        <td className="px-4 py-3 font-mono text-text-secondary">{trade.leverage}x</td>
+        <td className="px-4 py-3 font-mono text-text-muted">${trade.fees.total.toFixed(2)}</td>
+        <td className="px-4 py-3 text-text-secondary capitalize">{trade.orderType}</td>
+        <td className="px-4 py-3">
           {trade.journal?.grade && (
             <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
-              trade.journal.grade === 'A' ? 'bg-profit/15 text-profit' :
-              trade.journal.grade === 'B' ? 'bg-accent/15 text-accent' :
-              trade.journal.grade === 'C' ? 'bg-spot/15 text-spot' :
-              'bg-loss/15 text-loss'
+              trade.journal.grade === 'A' ? 'bg-accent/20 text-accent' :
+              trade.journal.grade === 'B' ? 'bg-accent/12 text-accent-hover' :
+              trade.journal.grade === 'C' ? 'bg-bg-tertiary text-text-secondary' :
+              'bg-bg-tertiary text-text-muted'
             }`}>
               {trade.journal.grade}
             </span>
