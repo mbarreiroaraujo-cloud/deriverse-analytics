@@ -27,6 +27,8 @@ interface AppStore {
   // Sidebar
   sidebarCollapsed: boolean;
   toggleSidebar: () => void;
+  sidebarOpen: boolean;
+  setSidebarOpen: (open: boolean) => void;
 
   // Init
   initialize: () => void;
@@ -51,7 +53,7 @@ function applyFilters(trades: Trade[], filters: FilterState): Trade[] {
 
 export const useStore = create<AppStore>((set, get) => ({
   currentPage: 'dashboard',
-  setPage: (page) => set({ currentPage: page }),
+  setPage: (page) => set({ currentPage: page, sidebarOpen: false }),
 
   allTrades: [],
   filteredTrades: [],
@@ -102,6 +104,8 @@ export const useStore = create<AppStore>((set, get) => ({
 
   sidebarCollapsed: false,
   toggleSidebar: () => set(s => ({ sidebarCollapsed: !s.sidebarCollapsed })),
+  sidebarOpen: false,
+  setSidebarOpen: (open) => set({ sidebarOpen: open }),
 
   initialize: () => {
     const allTrades = generateTrades(42);
