@@ -56,23 +56,23 @@ export function FeeAnalysis() {
   };
 
   return (
-    <div className="bg-bg-secondary border border-border rounded-xl p-5 card-hover">
-      <div className="mb-4">
-        <h3 className="text-sm font-medium text-text-primary">Fee Analysis</h3>
+    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20 card-hover">
+      <div className="mb-5">
+        <h3 className="text-sm font-semibold text-text-primary">Fee Analysis</h3>
         <p className="text-xs text-text-muted mt-0.5">Breakdown by type with cumulative total</p>
       </div>
 
       {/* Summary row */}
-      <div className="grid grid-cols-4 gap-3 mb-4">
+      <div className="grid grid-cols-4 gap-3 mb-5">
         {[
-          { label: 'Total Fees', value: totalFees, color: 'text-loss' },
-          { label: 'Entry', value: totalEntry, color: 'text-text-primary' },
-          { label: 'Exit', value: totalExit, color: 'text-text-primary' },
-          { label: 'Funding', value: totalFunding, color: 'text-text-primary' },
-        ].map(({ label, value, color }) => (
+          { label: 'Total Fees', value: totalFees },
+          { label: 'Entry', value: totalEntry },
+          { label: 'Exit', value: totalExit },
+          { label: 'Funding', value: totalFunding },
+        ].map(({ label, value }) => (
           <div key={label} className="text-center">
             <span className="text-[10px] text-text-muted uppercase block">{label}</span>
-            <span className={`text-sm font-mono ${color}`}>${value.toFixed(2)}</span>
+            <span className="text-sm font-mono text-text-primary">${value.toFixed(2)}</span>
           </div>
         ))}
       </div>
@@ -99,11 +99,11 @@ export function FeeAnalysis() {
           <AreaChart data={data} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
             <defs>
               <linearGradient id="cumFeeGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#ef4444" stopOpacity={0.2} />
-                <stop offset="100%" stopColor="#ef4444" stopOpacity={0} />
+                <stop offset="0%" stopColor="#6366f1" stopOpacity={0.2} />
+                <stop offset="100%" stopColor="#6366f1" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <Area type="monotone" dataKey="cumulative" stroke="#ef4444" strokeWidth={1.5} fill="url(#cumFeeGrad)" />
+            <Area type="monotone" dataKey="cumulative" stroke="#6366f1" strokeWidth={1.5} fill="url(#cumFeeGrad)" />
           </AreaChart>
         </ResponsiveContainer>
       </div>

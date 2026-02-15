@@ -51,7 +51,7 @@ export function Header() {
         <div className="flex items-center gap-2 px-3 py-1.5 bg-bg-primary border border-border rounded-md">
           <Wallet size={14} className="text-accent" />
           <span className="text-xs font-mono text-text-secondary hidden sm:inline">7xKp...3mNq</span>
-          <span className="w-1.5 h-1.5 rounded-full bg-profit animate-pulse" />
+          <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
         </div>
       </div>
     </header>

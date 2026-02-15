@@ -38,41 +38,38 @@ export function PnLCard() {
   const sparkData = metrics.equityCurve.map(p => p.equity);
 
   return (
-    <div className={`relative overflow-hidden bg-bg-secondary border rounded-xl p-5 card-hover ${isProfit ? 'border-profit/20' : 'border-loss/20'}`}>
-      {/* Background glow */}
-      <div className={`absolute top-0 right-0 w-32 h-32 rounded-full blur-3xl opacity-10 ${isProfit ? 'bg-profit' : 'bg-loss'}`} />
-
+    <div className="relative overflow-hidden bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20 card-hover">
       <div className="relative z-10">
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-xs font-medium text-text-secondary uppercase tracking-wider">Total PnL</span>
-          <div className="flex items-center gap-1">
-            {isProfit ? <TrendingUp size={14} className="text-profit" /> : <TrendingDown size={14} className="text-loss" />}
+        <div className="flex items-center justify-between mb-4">
+          <span className="text-xs font-medium text-text-muted uppercase tracking-wider">Total PnL</span>
+          <div className={`flex items-center gap-1.5 px-2 py-0.5 rounded-full ${isProfit ? 'bg-profit/10' : 'bg-loss/10'}`}>
+            {isProfit ? <TrendingUp size={12} className="text-profit" /> : <TrendingDown size={12} className="text-loss" />}
             <span className={`text-xs font-mono ${isProfit ? 'text-profit' : 'text-loss'}`}>
               {isProfit ? '+' : ''}{metrics.totalPnlPercent.toFixed(2)}%
             </span>
           </div>
         </div>
 
-        <div className={`font-mono text-3xl font-bold mb-3 ${isProfit ? 'text-profit' : 'text-loss'}`}>
+        <div className={`font-mono text-4xl font-bold mb-4 ${isProfit ? 'text-profit' : 'text-loss'}`}>
           {formatUSD(displayValue)}
         </div>
 
         <div className="h-10 -mx-1">
           <MiniChart
             data={sparkData.length > 0 ? sparkData : [0]}
-            color={isProfit ? '#22c55e' : '#ef4444'}
+            color="#6366f1"
             height={40}
           />
         </div>
 
-        <div className="flex items-center gap-4 mt-3 pt-3 border-t border-border/50">
+        <div className="flex items-center gap-4 mt-4 pt-4 border-t border-border/50">
           <div>
             <span className="text-[10px] text-text-muted uppercase">Volume</span>
             <p className="text-xs font-mono text-text-secondary">${(metrics.totalVolume / 1000).toFixed(1)}K</p>
           </div>
           <div>
             <span className="text-[10px] text-text-muted uppercase">Fees</span>
-            <p className="text-xs font-mono text-loss">${metrics.totalFees.toFixed(2)}</p>
+            <p className="text-xs font-mono text-text-secondary">${metrics.totalFees.toFixed(2)}</p>
           </div>
           <div>
             <span className="text-[10px] text-text-muted uppercase">Net</span>

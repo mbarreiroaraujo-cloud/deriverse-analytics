@@ -68,19 +68,19 @@ export function CorrelationMatrix() {
 
   const getCellColor = (val: number) => {
     if (val === 1) return 'bg-accent/30';
-    if (val > 0.5) return 'bg-profit/30';
-    if (val > 0.2) return 'bg-profit/15';
+    if (val > 0.5) return 'bg-accent/20';
+    if (val > 0.2) return 'bg-accent/10';
     if (val > -0.2) return 'bg-bg-tertiary';
-    if (val > -0.5) return 'bg-loss/15';
-    return 'bg-loss/30';
+    if (val > -0.5) return 'bg-spot/10';
+    return 'bg-spot/20';
   };
 
   if (symbols.length < 2) return null;
 
   return (
-    <div className="bg-bg-secondary border border-border rounded-xl p-5 card-hover">
-      <div className="mb-4">
-        <h3 className="text-sm font-medium text-text-primary">Correlation Matrix</h3>
+    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20 card-hover">
+      <div className="mb-5">
+        <h3 className="text-sm font-semibold text-text-primary">Correlation Matrix</h3>
         <p className="text-xs text-text-muted mt-0.5">Daily PnL correlation between instruments</p>
       </div>
 

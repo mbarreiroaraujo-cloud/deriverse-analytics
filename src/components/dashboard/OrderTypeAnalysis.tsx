@@ -8,15 +8,17 @@ const ORDER_TYPE_LABELS: Record<string, string> = {
   'stop-limit': 'Stop-Limit',
 };
 
+const ACCENT_SHADES = ['#6366f1', '#818cf8', '#a5b4fc', '#c7d2fe'];
+
 export function OrderTypeAnalysis() {
   const { metrics } = useStore();
 
-  const data = Object.entries(metrics.byOrderType).map(([type, m]) => ({
+  const data = Object.entries(metrics.byOrderType).map(([type, m], i) => ({
     type: ORDER_TYPE_LABELS[type] || type,
     pnl: m.pnl,
     winRate: m.winRate,
     trades: m.tradeCount,
-    fill: m.pnl >= 0 ? '#22c55e' : '#ef4444',
+    fill: ACCENT_SHADES[i % ACCENT_SHADES.length],
   }));
 
   const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: Array<{ payload: typeof data[0] }> }) => {
@@ -46,9 +48,9 @@ export function OrderTypeAnalysis() {
   };
 
   return (
-    <div className="bg-bg-secondary border border-border rounded-xl p-5 card-hover">
-      <div className="mb-4">
-        <h3 className="text-sm font-medium text-text-primary">Order Type Performance</h3>
+    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20 card-hover">
+      <div className="mb-5">
+        <h3 className="text-sm font-semibold text-text-primary">Order Type Performance</h3>
         <p className="text-xs text-text-muted mt-0.5">PnL and win rate by order execution type</p>
       </div>
 
@@ -69,7 +71,7 @@ export function OrderTypeAnalysis() {
       </div>
 
       {/* Summary table */}
-      <div className="mt-3 pt-3 border-t border-border/50">
+      <div className="mt-4 pt-4 border-t border-border/50">
         <div className="grid grid-cols-4 gap-2">
           {data.map(d => (
             <div key={d.type} className="text-center">

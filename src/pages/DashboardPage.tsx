@@ -11,11 +11,11 @@ import { RollingMetrics } from '../components/dashboard/RollingMetrics';
 
 export function DashboardPage() {
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-8 animate-fade-in">
       <FilterBar />
 
       {/* Top stats */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
         <div className="lg:col-span-1">
           <PnLCard />
         </div>
@@ -28,18 +28,18 @@ export function DashboardPage() {
       <EquityCurve />
 
       {/* Mid section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         <PerformanceHeatmap />
         <DirectionalBias />
       </div>
 
       {/* Bottom section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         <FeeAnalysis />
         <RollingMetrics />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         <BestWorstTrades />
         <OrderTypeAnalysis />
       </div>

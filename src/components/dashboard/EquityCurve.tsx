@@ -40,16 +40,16 @@ export function EquityCurve() {
   };
 
   return (
-    <div className="bg-bg-secondary border border-border rounded-xl p-5 card-hover">
-      <div className="flex items-center justify-between mb-4">
+    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20 card-hover">
+      <div className="flex items-center justify-between mb-5">
         <div>
-          <h3 className="text-sm font-medium text-text-primary">Equity Curve</h3>
+          <h3 className="text-sm font-semibold text-text-primary">Equity Curve</h3>
           <p className="text-xs text-text-muted mt-0.5">Portfolio value over time with drawdown overlay</p>
         </div>
         <button
           onClick={() => setShowDrawdown(!showDrawdown)}
-          className={`px-2.5 py-1 rounded text-xs font-medium transition-colors ${
-            showDrawdown ? 'bg-loss/10 text-loss border border-loss/20' : 'text-text-muted border border-border'
+          className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors ${
+            showDrawdown ? 'bg-accent/15 text-accent border border-accent/20' : 'text-text-muted border border-border/50'
           }`}
         >
           Drawdown

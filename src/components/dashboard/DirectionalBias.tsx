@@ -13,16 +13,16 @@ export function DirectionalBias() {
   const shortWinRate = shorts.length > 0 ? (shorts.filter(t => t.pnl > 0).length / shorts.length * 100) : 0;
 
   const data = [
-    { name: 'Long', value: longs.length, color: '#22c55e' },
-    { name: 'Short', value: shorts.length, color: '#ef4444' },
+    { name: 'Long', value: longs.length, color: '#6366f1' },
+    { name: 'Short', value: shorts.length, color: '#f59e0b' },
   ];
 
   const ratio = metrics.longShortRatio;
 
   return (
-    <div className="bg-bg-secondary border border-border rounded-xl p-5 card-hover">
-      <div className="mb-4">
-        <h3 className="text-sm font-medium text-text-primary">Directional Bias</h3>
+    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20 card-hover">
+      <div className="mb-5">
+        <h3 className="text-sm font-semibold text-text-primary">Directional Bias</h3>
         <p className="text-xs text-text-muted mt-0.5">Long vs Short distribution & performance</p>
       </div>
 
@@ -55,7 +55,7 @@ export function DirectionalBias() {
         <div className="flex-1 space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-profit" />
+              <span className="w-2 h-2 rounded-full bg-accent" />
               <span className="text-xs text-text-secondary">Long</span>
             </div>
             <div className="text-right">
@@ -78,7 +78,7 @@ export function DirectionalBias() {
 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-loss" />
+              <span className="w-2 h-2 rounded-full bg-spot" />
               <span className="text-xs text-text-secondary">Short</span>
             </div>
             <div className="text-right">

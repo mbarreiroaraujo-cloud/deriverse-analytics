@@ -25,13 +25,13 @@ export function MetricCard({ title, value, subtitle, icon, trend, trendValue, va
 
   return (
     <div
-      className={`bg-bg-secondary border border-border rounded-lg p-4 card-hover transition-all duration-500 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
+      className={`bg-bg-secondary/80 border border-border/50 rounded-2xl p-5 shadow-sm shadow-black/20 card-hover transition-all duration-500 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
     >
       <div className="flex items-center justify-between mb-2">
-        <span className="text-xs font-medium text-text-secondary uppercase tracking-wider">{title}</span>
+        <span className="text-xs font-medium text-text-muted uppercase tracking-wider">{title}</span>
         {icon && <span className="text-text-muted">{icon}</span>}
       </div>
-      <div className={`font-mono text-2xl font-semibold ${colorClass} mb-1`}>
+      <div className={`font-mono text-xl font-semibold ${colorClass} mb-1`}>
         {value}
       </div>
       <div className="flex items-center gap-2">

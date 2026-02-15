@@ -21,9 +21,9 @@ export function GreeksExposure() {
   const maxAbs = Math.max(...entries.map(e => Math.abs(e.value)));
 
   return (
-    <div className="bg-bg-secondary border border-border rounded-xl p-5 card-hover">
-      <div className="mb-4">
-        <h3 className="text-sm font-medium text-text-primary">Greeks Exposure</h3>
+    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20 card-hover">
+      <div className="mb-5">
+        <h3 className="text-sm font-semibold text-text-primary">Greeks Exposure</h3>
         <p className="text-xs text-text-muted mt-0.5">Aggregate options risk across portfolio</p>
       </div>
 
@@ -40,13 +40,13 @@ export function GreeksExposure() {
                   <span className="text-sm font-mono text-accent">{info.unit}</span>
                   <span className="text-xs text-text-secondary capitalize">{key}</span>
                 </div>
-                <span className={`text-sm font-mono font-medium ${isPositive ? 'text-profit' : 'text-loss'}`}>
+                <span className="text-sm font-mono font-medium text-text-primary">
                   {isPositive ? '+' : ''}{value.toFixed(2)}
                 </span>
               </div>
               <div className="h-2 bg-bg-primary rounded-full overflow-hidden">
                 <div
-                  className={`h-full rounded-full transition-all duration-1000 ${isPositive ? 'bg-profit/60' : 'bg-loss/60'}`}
+                  className={`h-full rounded-full transition-all duration-1000 ${isPositive ? 'bg-accent/60' : 'bg-accent/40'}`}
                   style={{ width: `${barWidth}%` }}
                 />
               </div>
