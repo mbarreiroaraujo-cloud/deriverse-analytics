@@ -252,6 +252,10 @@ MIT
 
 ## Author
 
-**Miguel Barreiro Araujo** — Engineer & Derivatives Trader
+**Miguel Barreiro Araujo** — Mining & Energy Resources Engineer | Innovation Consultant | Derivatives Trader
 
-- GitHub: [@mbarreiroaraujo-cloud](https://github.com/mbarreiroaraujo-cloud)
+- **GitHub:** [@mbarreiroaraujo-cloud](https://github.com/mbarreiroaraujo-cloud)
+- **Telegram:** [@miguelbarreiroaraujo](https://t.me/miguelbarreiroaraujo)
+- **LinkedIn:** [miguel-barreiro-araujo](https://www.linkedin.com/in/miguel-barreiro-araujo)
+- **Email:** mbarreiroaraujo@gmail.com
+- **Background:** Engineering degree (University of Vigo), international experience in offshore energy projects, currently working in innovation consulting. Active derivatives trader with focus on risk-adjusted portfolio analysis.
