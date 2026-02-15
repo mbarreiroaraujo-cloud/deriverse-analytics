@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { TrendingUp, TrendingDown } from 'lucide-react';
 import { useStore } from '../../store/useStore';
 import { MiniChart } from '../shared/MiniChart';
+import { InsightTooltip } from '../shared/InsightTooltip';
 
 function formatUSD(value: number): string {
   const abs = Math.abs(value);
@@ -10,7 +11,7 @@ function formatUSD(value: number): string {
 }
 
 export function PnLCard() {
-  const { metrics } = useStore();
+  const { metrics, experience } = useStore();
   const [displayValue, setDisplayValue] = useState(0);
   const target = metrics.totalPnl;
   const isProfit = target >= 0;
@@ -41,7 +42,13 @@ export function PnLCard() {
     <div className="relative overflow-hidden bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-hover">
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-4">
-          <span className="text-[10px] sm:text-xs font-medium text-text-muted uppercase tracking-wider">Total PnL</span>
+          {experience.showInsightTooltips ? (
+            <InsightTooltip metric="totalPnl" value={metrics.totalPnl}>
+              <span className="text-[10px] sm:text-xs font-medium text-text-muted uppercase tracking-wider">Total PnL</span>
+            </InsightTooltip>
+          ) : (
+            <span className="text-[10px] sm:text-xs font-medium text-text-muted uppercase tracking-wider">Total PnL</span>
+          )}
           <div className={`flex items-center gap-1.5 px-2 py-0.5 rounded-full ${isProfit ? 'bg-profit/10' : 'bg-loss/10'}`}>
             {isProfit ? <TrendingUp size={12} className="text-profit" /> : <TrendingDown size={12} className="text-loss" />}
             <span className={`text-[10px] sm:text-xs font-mono font-semibold ${isProfit ? 'text-profit' : 'text-loss'}`}>

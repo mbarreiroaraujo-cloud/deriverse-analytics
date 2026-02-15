@@ -11,7 +11,8 @@ const NAV_ITEMS: { page: Page; label: string; icon: typeof BarChart3 }[] = [
 ];
 
 export function Sidebar() {
-  const { currentPage, setPage, sidebarCollapsed, toggleSidebar, sidebarOpen, setSidebarOpen } = useStore();
+  const { currentPage, setPage, sidebarCollapsed, toggleSidebar, sidebarOpen, setSidebarOpen, metrics } = useStore();
+  const monthlySavings = metrics.totalFees * 0.5 / 3;
 
   return (
     <>
@@ -63,6 +64,11 @@ export function Sidebar() {
               >
                 <Icon size={18} className="flex-shrink-0" />
                 <span className={sidebarCollapsed ? 'lg:hidden' : ''}>{label}</span>
+                {page === 'fees' && monthlySavings >= 50 && !sidebarCollapsed && (
+                  <span className="ml-auto text-[9px] font-mono font-semibold text-accent bg-accent/10 px-1.5 py-0.5 rounded-full lg:block hidden">
+                    Save ${monthlySavings.toFixed(0)}
+                  </span>
+                )}
               </button>
             );
           })}
