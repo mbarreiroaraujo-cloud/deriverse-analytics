@@ -1,20 +1,28 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import {
   Area, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, ComposedChart,
 } from 'recharts';
 import { useStore } from '../../store/useStore';
+import { CardTimeRange } from '../shared/CardTimeRange';
 
 export function EquityCurve() {
   const { metrics } = useStore();
   const [showDrawdown, setShowDrawdown] = useState(true);
+  const [localDays, setLocalDays] = useState(90);
 
-  const data = metrics.equityCurve.map((point, i) => ({
-    date: point.date,
-    equity: point.equity,
-    pnl: point.pnl,
-    drawdown: metrics.drawdownCurve[i]?.drawdownPercent || 0,
-  }));
+  const data = useMemo(() => {
+    const cutoff = Date.now() - localDays * 86400000;
+    return metrics.equityCurve
+      .map((point, i) => ({
+        date: point.date,
+        equity: point.equity,
+        pnl: point.pnl,
+        drawdown: metrics.drawdownCurve[i]?.drawdownPercent || 0,
+        timestamp: new Date(point.date).getTime(),
+      }))
+      .filter(p => p.timestamp >= cutoff);
+  }, [metrics.equityCurve, metrics.drawdownCurve, localDays]);
 
   const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: Array<{ value: number; dataKey: string }>; label?: string }) => {
     if (!active || !payload?.length) return null;
@@ -41,19 +49,22 @@ export function EquityCurve() {
 
   return (
     <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-hover">
-      <div className="flex items-center justify-between mb-3 sm:mb-5">
+      <div className="flex items-center justify-between mb-4 sm:mb-5">
         <div>
           <h3 className="text-xs sm:text-sm font-semibold text-text-primary">Equity Curve</h3>
-          <p className="text-[10px] sm:text-xs text-text-muted mt-0.5">Portfolio value over time with drawdown overlay</p>
+          <p className="text-[10px] sm:text-xs text-text-muted mt-0.5 hidden sm:block">Portfolio value over time with drawdown overlay</p>
         </div>
-        <button
-          onClick={() => setShowDrawdown(!showDrawdown)}
-          className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors ${
-            showDrawdown ? 'bg-accent/15 text-accent border border-accent/20' : 'text-text-muted border border-border/50'
-          }`}
-        >
-          Drawdown
-        </button>
+        <div className="flex items-center gap-2">
+          <CardTimeRange value={localDays} onChange={setLocalDays} />
+          <button
+            onClick={() => setShowDrawdown(!showDrawdown)}
+            className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors ${
+              showDrawdown ? 'bg-accent/15 text-accent border border-accent/20' : 'text-text-muted border border-border/50'
+            }`}
+          >
+            Drawdown
+          </button>
+        </div>
       </div>
 
       <div className="h-[200px] sm:h-[300px] overflow-hidden rounded-lg">

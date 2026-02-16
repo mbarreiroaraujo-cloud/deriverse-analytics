@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import { Filter, X } from 'lucide-react';
 import { useStore } from '../../store/useStore';
 import type { Instrument } from '../../data/types';
 
 export function FilterBar() {
   const { filters, setInstruments, setSymbols, resetFilters, allTrades } = useStore();
+  const [showSymbols, setShowSymbols] = useState(false);
 
   const allSymbols = [...new Set(allTrades.map(t => t.symbol))].sort();
   const instruments: { key: Instrument; label: string; color: string }[] = [
@@ -30,9 +32,9 @@ export function FilterBar() {
   };
 
   return (
-    <div className="flex items-center gap-3 flex-wrap">
+    <div className="flex items-center gap-2 flex-wrap">
       <Filter size={14} className="text-text-muted" />
-      {/* Instrument filters */}
+      {/* Instrument filters — always visible */}
       <div className="flex items-center gap-1">
         {instruments.map(({ key, label, color }) => (
           <button
@@ -50,19 +52,47 @@ export function FilterBar() {
         ))}
       </div>
 
-      {/* Symbol dropdown */}
-      <select
-        value=""
-        onChange={(e) => {
-          if (e.target.value) toggleSymbol(e.target.value);
-        }}
-        className="bg-bg-secondary border border-border rounded text-xs text-text-secondary px-2 py-1 outline-none focus:border-accent/30"
+      {/* Symbol dropdown — hidden on mobile by default */}
+      <div className="hidden sm:block">
+        <select
+          value=""
+          onChange={(e) => {
+            if (e.target.value) toggleSymbol(e.target.value);
+          }}
+          className="bg-bg-secondary border border-border rounded text-xs text-text-secondary px-2 py-1 outline-none focus:border-accent/30"
+        >
+          <option value="">+ Symbol</option>
+          {allSymbols.map(s => (
+            <option key={s} value={s}>{s}</option>
+          ))}
+        </select>
+      </div>
+
+      {/* Mobile: show filter button that toggles symbol dropdown */}
+      <button
+        onClick={() => setShowSymbols(!showSymbols)}
+        className="sm:hidden px-2 py-1 text-[10px] bg-bg-tertiary rounded text-text-muted border border-border/50"
       >
-        <option value="">+ Symbol</option>
-        {allSymbols.map(s => (
-          <option key={s} value={s}>{s}</option>
-        ))}
-      </select>
+        + Filter{filters.symbols.length > 0 && ` (${filters.symbols.length})`}
+      </button>
+
+      {/* Mobile symbol dropdown (shown when expanded) */}
+      {showSymbols && (
+        <div className="sm:hidden">
+          <select
+            value=""
+            onChange={(e) => {
+              if (e.target.value) toggleSymbol(e.target.value);
+            }}
+            className="bg-bg-secondary border border-border rounded text-xs text-text-secondary px-2 py-1 outline-none focus:border-accent/30"
+          >
+            <option value="">+ Symbol</option>
+            {allSymbols.map(s => (
+              <option key={s} value={s}>{s}</option>
+            ))}
+          </select>
+        </div>
+      )}
 
       {/* Active symbol tags */}
       {filters.symbols.map(sym => (
