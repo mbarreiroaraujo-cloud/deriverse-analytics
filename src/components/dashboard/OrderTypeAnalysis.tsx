@@ -49,9 +49,9 @@ export function OrderTypeAnalysis() {
 
   return (
     <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-hover">
-      <div className="mb-3 sm:mb-5">
+      <div className="mb-4 sm:mb-5">
         <h3 className="text-xs sm:text-sm font-semibold text-text-primary">Order Type Performance</h3>
-        <p className="text-[10px] sm:text-xs text-text-muted mt-0.5">PnL and win rate by order execution type</p>
+        <p className="text-[10px] sm:text-xs text-text-muted mt-0.5 hidden sm:block">PnL and win rate by order execution type</p>
       </div>
 
       <div className="h-[180px] sm:h-[250px] overflow-hidden rounded-lg">

@@ -8,7 +8,7 @@ export function LiquidationProximity() {
 
   return (
     <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-hover">
-      <div className="flex items-center gap-2 mb-3 sm:mb-5">
+      <div className="flex items-center gap-2 mb-4 sm:mb-5">
         <AlertTriangle size={16} className="text-spot" />
         <div>
           <h3 className="text-xs sm:text-sm font-semibold text-text-primary">Liquidation Proximity</h3>

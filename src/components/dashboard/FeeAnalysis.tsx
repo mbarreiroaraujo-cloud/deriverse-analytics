@@ -1,17 +1,23 @@
+import { useState } from 'react';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, AreaChart, Area,
 } from 'recharts';
 import { useStore } from '../../store/useStore';
 import { format } from 'date-fns';
+import { CardTimeRange } from '../shared/CardTimeRange';
 
 export function FeeAnalysis() {
   const { filteredTrades } = useStore();
+  const [localDays, setLocalDays] = useState(90);
+
+  const cutoff = Date.now() - localDays * 86400000;
+  const localTrades = filteredTrades.filter(t => t.timestamp >= cutoff);
 
   // Group fees by day
   const feesByDay = new Map<string, { entry: number; exit: number; funding: number; total: number }>();
 
-  for (const trade of filteredTrades) {
+  for (const trade of localTrades) {
     const day = format(new Date(trade.closeTimestamp), 'yyyy-MM-dd');
     const existing = feesByDay.get(day) || { entry: 0, exit: 0, funding: 0, total: 0 };
     existing.entry += trade.fees.entry;
@@ -35,10 +41,10 @@ export function FeeAnalysis() {
     };
   });
 
-  const totalFees = filteredTrades.reduce((s, t) => s + t.fees.total, 0);
-  const totalEntry = filteredTrades.reduce((s, t) => s + t.fees.entry, 0);
-  const totalExit = filteredTrades.reduce((s, t) => s + t.fees.exit, 0);
-  const totalFunding = filteredTrades.reduce((s, t) => s + Math.abs(t.fees.funding), 0);
+  const totalFees = localTrades.reduce((s, t) => s + t.fees.total, 0);
+  const totalEntry = localTrades.reduce((s, t) => s + t.fees.entry, 0);
+  const totalExit = localTrades.reduce((s, t) => s + t.fees.exit, 0);
+  const totalFunding = localTrades.reduce((s, t) => s + Math.abs(t.fees.funding), 0);
 
   const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: Array<{ value: number; dataKey: string; color: string }>; label?: string }) => {
     if (!active || !payload?.length) return null;
@@ -57,9 +63,12 @@ export function FeeAnalysis() {
 
   return (
     <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-hover">
-      <div className="mb-3 sm:mb-5">
-        <h3 className="text-xs sm:text-sm font-semibold text-text-primary">Fee Analysis</h3>
-        <p className="text-[10px] sm:text-xs text-text-muted mt-0.5">Breakdown by type with cumulative total</p>
+      <div className="flex items-center justify-between mb-4 sm:mb-5">
+        <div>
+          <h3 className="text-xs sm:text-sm font-semibold text-text-primary">Fee Analysis</h3>
+          <p className="text-[10px] sm:text-xs text-text-muted mt-0.5 hidden sm:block">Breakdown by type with cumulative total</p>
+        </div>
+        <CardTimeRange value={localDays} onChange={setLocalDays} />
       </div>
 
       {/* Summary row */}

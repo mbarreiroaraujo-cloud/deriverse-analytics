@@ -1,11 +1,17 @@
+import { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useStore } from '../../store/useStore';
 import { format } from 'date-fns';
+import { CardTimeRange } from '../shared/CardTimeRange';
 
 export function FundingRatePnL() {
   const { filteredTrades } = useStore();
+  const [localDays, setLocalDays] = useState(90);
 
-  const perpTrades = filteredTrades.filter(t => t.instrument === 'perpetual');
+  const cutoff = Date.now() - localDays * 86400000;
+  const localTrades = filteredTrades.filter(t => t.timestamp >= cutoff);
+
+  const perpTrades = localTrades.filter(t => t.instrument === 'perpetual');
   const tradingPnl = perpTrades.reduce((s, t) => s + t.pnl, 0);
   const fundingPnl = perpTrades.reduce((s, t) => s + t.fees.funding, 0);
   const netPnl = tradingPnl - Math.abs(fundingPnl);
@@ -47,9 +53,12 @@ export function FundingRatePnL() {
 
   return (
     <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-hover">
-      <div className="mb-3 sm:mb-5">
-        <h3 className="text-xs sm:text-sm font-semibold text-text-primary">Funding Rate PnL</h3>
-        <p className="text-[10px] sm:text-xs text-text-muted mt-0.5">Trading vs funding cost separation for perpetuals</p>
+      <div className="flex items-center justify-between mb-4 sm:mb-5">
+        <div>
+          <h3 className="text-xs sm:text-sm font-semibold text-text-primary">Funding Rate PnL</h3>
+          <p className="text-[10px] sm:text-xs text-text-muted mt-0.5 hidden sm:block">Trading vs funding cost separation for perpetuals</p>
+        </div>
+        <CardTimeRange value={localDays} onChange={setLocalDays} />
       </div>
 
       {/* Summary */}

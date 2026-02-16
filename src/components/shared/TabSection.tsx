@@ -18,9 +18,26 @@ export function TabSection({ tabs, defaultTab }: TabSectionProps) {
   const activeContent = tabs.find(t => t.id === activeTab)?.content;
 
   return (
-    <div>
-      {/* Tab bar */}
-      <div className="flex gap-2 overflow-x-auto px-1 py-3 scrollbar-hide sticky top-14 z-20 bg-bg-primary">
+    <div className="flex sm:block">
+      {/* Vertical tab column — mobile only */}
+      <div className="flex flex-col gap-1 w-[72px] shrink-0 border-r border-border/30 bg-bg-secondary/50 pt-2 sm:hidden">
+        {tabs.map(tab => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            className={`px-2 py-3 text-[10px] font-medium text-center transition-all ${
+              activeTab === tab.id
+                ? 'border-l-2 border-accent bg-accent/10 text-accent'
+                : 'border-l-2 border-transparent text-text-muted'
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Horizontal pills — desktop only */}
+      <div className="hidden sm:flex gap-2 overflow-x-auto px-1 py-3 scrollbar-hide sticky top-14 z-20 bg-bg-primary">
         {tabs.map(tab => (
           <button
             key={tab.id}
@@ -37,17 +54,20 @@ export function TabSection({ tabs, defaultTab }: TabSectionProps) {
       </div>
 
       {/* Tab content */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activeTab}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.2 }}
-        >
-          {activeContent}
-        </motion.div>
-      </AnimatePresence>
+      <div className="flex-1 min-w-0 sm:w-full">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15 }}
+            className="pl-3 sm:pl-0"
+          >
+            {activeContent}
+          </motion.div>
+        </AnimatePresence>
+      </div>
     </div>
   );
 }

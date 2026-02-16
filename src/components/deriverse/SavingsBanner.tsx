@@ -19,7 +19,7 @@ export function SavingsBanner() {
         <Sparkles size={14} className="text-accent" />
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-[10px] sm:text-xs font-medium text-accent">
+        <p className="text-[11px] sm:text-sm font-medium text-accent">
           Save ~${monthlySaving.toFixed(0)}/month on fees
         </p>
         <p className="text-[10px] text-text-muted truncate">

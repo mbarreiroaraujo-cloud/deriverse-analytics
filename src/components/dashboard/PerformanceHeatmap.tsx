@@ -1,4 +1,6 @@
+import { useState, useMemo } from 'react';
 import { useStore } from '../../store/useStore';
+import { CardTimeRange } from '../shared/CardTimeRange';
 
 const DAYS_FULL = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const DAYS_SHORT = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
@@ -21,17 +23,35 @@ function getHeatColor(value: number, max: number): string {
 }
 
 export function PerformanceHeatmap() {
-  const { metrics } = useStore();
-  const heatmap = metrics.heatmapData;
+  const { filteredTrades } = useStore();
+  const [localDays, setLocalDays] = useState(90);
+
+  const heatmap = useMemo(() => {
+    const cutoff = Date.now() - localDays * 86400000;
+    const localTrades = filteredTrades.filter(t => t.timestamp >= cutoff);
+
+    const grid: number[][] = Array.from({ length: 6 }, () => Array(7).fill(0));
+    for (const trade of localTrades) {
+      const d = new Date(trade.closeTimestamp);
+      const dayOfWeek = (d.getUTCDay() + 6) % 7; // Mon=0
+      const hour = d.getUTCHours();
+      const timeBlock = Math.floor(hour / 4);
+      grid[timeBlock][dayOfWeek] += trade.pnl;
+    }
+    return grid;
+  }, [filteredTrades, localDays]);
 
   const flatValues = heatmap.flat().map(Math.abs);
   const maxVal = Math.max(...flatValues, 1);
 
   return (
     <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-hover">
-      <div className="mb-3 sm:mb-5">
-        <h3 className="text-xs sm:text-sm font-semibold text-text-primary">Performance Heatmap</h3>
-        <p className="text-[10px] sm:text-xs text-text-muted mt-0.5">PnL by time of day and day of week (UTC)</p>
+      <div className="flex items-center justify-between mb-4 sm:mb-5">
+        <div>
+          <h3 className="text-xs sm:text-sm font-semibold text-text-primary">Performance Heatmap</h3>
+          <p className="text-[10px] sm:text-xs text-text-muted mt-0.5 hidden sm:block">PnL by time of day and day of week (UTC)</p>
+        </div>
+        <CardTimeRange value={localDays} onChange={setLocalDays} />
       </div>
 
       <div className="overflow-x-auto scroll-smooth-touch">
