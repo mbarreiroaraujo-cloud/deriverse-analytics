@@ -58,6 +58,9 @@ body {
 /* Monospace for all numbers */
 .font-mono {
   font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace !important;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
 }
 
 /* Custom scrollbar */
@@ -183,6 +186,38 @@ body {
 /* Smooth content transitions */
 .content-fade {
   transition: opacity 0.15s ease;
+}
+
+/* Hide scrollbar for tab bars */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Table scroll hint gradient */
+.table-scroll-hint {
+  position: relative;
+}
+.table-scroll-hint::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+  background: linear-gradient(to right, transparent, var(--bg-secondary));
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Smooth touch scrolling */
+.scroll-smooth-touch {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* Chart container safety */
+.chart-container {
+  overflow: hidden;
+  border-radius: 0.5rem;
 }
 
 @theme {

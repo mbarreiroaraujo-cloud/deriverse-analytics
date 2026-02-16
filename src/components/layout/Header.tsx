@@ -42,7 +42,7 @@ export function Header() {
             </button>
           ))}
         </div>
-        <span className="text-xs text-text-muted font-mono hidden sm:inline">{metrics.tradeCount} trades</span>
+        <span className="text-xs text-text-muted font-mono font-medium hidden sm:inline">{metrics.tradeCount} trades</span>
       </div>
 
       {/* Right: Actions */}
@@ -50,7 +50,7 @@ export function Header() {
         <ExportButton trades={filteredTrades} />
         <div className="flex items-center gap-2 px-3 py-1.5 bg-bg-primary border border-border rounded-md">
           <Wallet size={14} className="text-accent" />
-          <span className="text-xs font-mono text-text-secondary hidden sm:inline">7xKp...3mNq</span>
+          <span className="text-xs font-mono font-medium text-text-secondary hidden sm:inline">7xKp...3mNq</span>
           <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
         </div>
       </div>

@@ -46,44 +46,44 @@ export function FundingRatePnL() {
   };
 
   return (
-    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20 card-hover">
-      <div className="mb-5">
-        <h3 className="text-sm font-semibold text-text-primary">Funding Rate PnL</h3>
-        <p className="text-xs text-text-muted mt-0.5">Trading vs funding cost separation for perpetuals</p>
+    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-hover">
+      <div className="mb-3 sm:mb-5">
+        <h3 className="text-xs sm:text-sm font-semibold text-text-primary">Funding Rate PnL</h3>
+        <p className="text-[10px] sm:text-xs text-text-muted mt-0.5">Trading vs funding cost separation for perpetuals</p>
       </div>
 
       {/* Summary */}
-      <div className="grid grid-cols-3 gap-3 mb-5">
+      <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-5">
         <div className="text-center p-2 bg-bg-primary rounded-lg border border-border/50">
           <span className="text-[10px] text-text-muted uppercase block">Trading PnL</span>
-          <span className={`text-sm font-mono font-medium ${tradingPnl >= 0 ? 'text-profit' : 'text-loss'}`}>
+          <span className={`text-xs sm:text-sm font-mono font-semibold ${tradingPnl >= 0 ? 'text-profit' : 'text-loss'}`}>
             {tradingPnl >= 0 ? '+' : ''}${tradingPnl.toFixed(2)}
           </span>
         </div>
         <div className="text-center p-2 bg-bg-primary rounded-lg border border-border/50">
           <span className="text-[10px] text-text-muted uppercase block">Funding Cost</span>
-          <span className="text-sm font-mono font-medium text-text-primary">
+          <span className="text-xs sm:text-sm font-mono font-semibold text-text-primary">
             -${Math.abs(fundingPnl).toFixed(2)}
           </span>
         </div>
         <div className="text-center p-2 bg-bg-primary rounded-lg border border-border/50">
           <span className="text-[10px] text-text-muted uppercase block">Net Perps PnL</span>
-          <span className={`text-sm font-mono font-medium ${netPnl >= 0 ? 'text-profit' : 'text-loss'}`}>
+          <span className={`text-xs sm:text-sm font-mono font-semibold ${netPnl >= 0 ? 'text-profit' : 'text-loss'}`}>
             {netPnl >= 0 ? '+' : ''}${netPnl.toFixed(2)}
           </span>
         </div>
       </div>
 
       {/* Chart */}
-      <div className="h-48">
+      <div className="h-[180px] sm:h-[250px] overflow-hidden rounded-lg">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
+          <BarChart data={data} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#1e2a3a" vertical={false} />
             <XAxis dataKey="date" tick={{ fontSize: 9, fill: '#4a5568' }} tickLine={false} axisLine={false} tickFormatter={(v: string) => v.slice(5)} />
-            <YAxis tick={{ fontSize: 9, fill: '#4a5568' }} tickLine={false} axisLine={false} tickFormatter={(v: number) => `$${v}`} />
-            <Tooltip content={<CustomTooltip />} />
-            <Bar dataKey="trading" fill="#6366f1" radius={[2, 2, 0, 0]} />
-            <Bar dataKey="funding" fill="#f59e0b" radius={[2, 2, 0, 0]} />
+            <YAxis width={45} tick={{ fontSize: 9, fill: '#4a5568' }} tickLine={false} axisLine={false} tickFormatter={(v: number) => v >= 1000 ? `$${(v/1000).toFixed(0)}K` : `$${v}`} />
+            <Tooltip content={<CustomTooltip />} wrapperStyle={{ zIndex: 100 }} />
+            <Bar dataKey="trading" fill="#6366f1" maxBarSize={40} radius={[2, 2, 0, 0]} />
+            <Bar dataKey="funding" fill="#f59e0b" maxBarSize={40} radius={[2, 2, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </div>

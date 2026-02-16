@@ -19,7 +19,7 @@ export function BestWorstTrades() {
           {isBest ? <ArrowUpRight size={16} className="text-text-secondary" /> : <ArrowDownRight size={16} className="text-text-secondary" />}
           <span className="text-xs font-medium text-text-muted uppercase">{isBest ? 'Largest Win' : 'Largest Loss'}</span>
         </div>
-        <div className={`font-mono text-xl font-bold ${isBest ? 'text-profit' : 'text-loss'}`}>
+        <div className={`font-mono text-base sm:text-xl font-bold ${isBest ? 'text-profit' : 'text-loss'}`}>
           {trade.pnl >= 0 ? '+' : ''}${trade.pnl.toFixed(2)}
         </div>
         <div className="mt-2 space-y-1">
@@ -45,12 +45,12 @@ export function BestWorstTrades() {
   };
 
   return (
-    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20 card-hover">
-      <div className="mb-5">
-        <h3 className="text-sm font-semibold text-text-primary">Best & Worst Trades</h3>
-        <p className="text-xs text-text-muted mt-0.5">Extreme P&L for risk management awareness</p>
+    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-hover">
+      <div className="mb-3 sm:mb-5">
+        <h3 className="text-xs sm:text-sm font-semibold text-text-primary">Best & Worst Trades</h3>
+        <p className="text-[10px] sm:text-xs text-text-muted mt-0.5">Extreme P&L for risk management awareness</p>
       </div>
-      <div className="flex gap-4">
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
         <TradeCard trade={best} type="best" />
         <TradeCard trade={worst} type="worst" />
       </div>

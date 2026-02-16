@@ -48,20 +48,20 @@ export function OrderTypeAnalysis() {
   };
 
   return (
-    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20 card-hover">
-      <div className="mb-5">
-        <h3 className="text-sm font-semibold text-text-primary">Order Type Performance</h3>
-        <p className="text-xs text-text-muted mt-0.5">PnL and win rate by order execution type</p>
+    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-hover">
+      <div className="mb-3 sm:mb-5">
+        <h3 className="text-xs sm:text-sm font-semibold text-text-primary">Order Type Performance</h3>
+        <p className="text-[10px] sm:text-xs text-text-muted mt-0.5">PnL and win rate by order execution type</p>
       </div>
 
-      <div className="h-48">
+      <div className="h-[180px] sm:h-[250px] overflow-hidden rounded-lg">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
+          <BarChart data={data} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#1e2a3a" vertical={false} />
-            <XAxis dataKey="type" tick={{ fontSize: 11, fill: '#8892a4' }} tickLine={false} axisLine={false} />
-            <YAxis tick={{ fontSize: 10, fill: '#4a5568' }} tickLine={false} axisLine={false} tickFormatter={(v: number) => `$${v}`} />
-            <Tooltip content={<CustomTooltip />} />
-            <Bar dataKey="pnl" radius={[4, 4, 0, 0]} animationDuration={1500}>
+            <XAxis dataKey="type" tick={{ fontSize: 10, fill: '#8892a4' }} tickLine={false} axisLine={false} />
+            <YAxis width={45} tick={{ fontSize: 10, fill: '#4a5568' }} tickLine={false} axisLine={false} tickFormatter={(v: number) => v >= 1000 ? `$${(v/1000).toFixed(0)}K` : `$${v}`} />
+            <Tooltip content={<CustomTooltip />} wrapperStyle={{ zIndex: 100 }} />
+            <Bar dataKey="pnl" radius={[4, 4, 0, 0]} maxBarSize={40} animationDuration={1500}>
               {data.map((entry, i) => (
                 <Cell key={i} fill={entry.fill} />
               ))}
@@ -72,11 +72,11 @@ export function OrderTypeAnalysis() {
 
       {/* Summary table */}
       <div className="mt-4 pt-4 border-t border-border/50">
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           {data.map(d => (
             <div key={d.type} className="text-center">
               <span className="text-[10px] text-text-muted block">{d.type}</span>
-              <span className="text-xs font-mono text-text-secondary">{d.winRate.toFixed(1)}% WR</span>
+              <span className="text-xs font-mono font-semibold text-text-secondary">{d.winRate.toFixed(1)}% WR</span>
             </div>
           ))}
         </div>
