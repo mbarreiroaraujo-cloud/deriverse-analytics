@@ -62,7 +62,7 @@ export function TabSection({ tabs, defaultTab }: TabSectionProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.15 }}
-            className="pl-3 sm:pl-0"
+            className="pl-3 pr-1 sm:pl-0 sm:pr-0"
           >
             {activeContent}
           </motion.div>

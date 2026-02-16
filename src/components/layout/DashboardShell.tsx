@@ -19,7 +19,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
         }`}
       >
         <Header />
-        <main className="flex-1 p-4 lg:p-6 overflow-y-auto">
+        <main className="flex-1 px-3 py-4 sm:px-4 lg:px-6 lg:py-6 overflow-y-auto">
           {children}
         </main>
       </div>

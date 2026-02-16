@@ -25,7 +25,7 @@ export function OrderTypeAnalysis() {
     if (!active || !payload?.length) return null;
     const d = payload[0].payload;
     return (
-      <div className="bg-bg-tertiary border border-border rounded-lg p-3 shadow-xl">
+      <div className="bg-bg-tertiary/95 backdrop-blur-sm border border-border/70 rounded-lg p-3 shadow-xl shadow-black/40">
         <p className="text-xs font-medium text-text-primary mb-2">{d.type}</p>
         <div className="space-y-1">
           <div className="flex justify-between gap-4">
@@ -60,7 +60,14 @@ export function OrderTypeAnalysis() {
             <CartesianGrid strokeDasharray="3 3" stroke="#1e2a3a" vertical={false} />
             <XAxis dataKey="type" tick={{ fontSize: 10, fill: '#8892a4' }} tickLine={false} axisLine={false} />
             <YAxis width={45} tick={{ fontSize: 10, fill: '#4a5568' }} tickLine={false} axisLine={false} tickFormatter={(v: number) => v >= 1000 ? `$${(v/1000).toFixed(0)}K` : `$${v}`} />
-            <Tooltip content={<CustomTooltip />} wrapperStyle={{ zIndex: 100 }} />
+            <Tooltip
+              content={<CustomTooltip />}
+              wrapperStyle={{ zIndex: 100, background: 'transparent', border: 'none', boxShadow: 'none', outline: 'none' }}
+              position={{ y: 10 }}
+              allowEscapeViewBox={{ x: false, y: false }}
+              offset={10}
+              cursor={{ fill: 'rgba(99, 102, 241, 0.08)' }}
+            />
             <Bar dataKey="pnl" radius={[4, 4, 0, 0]} maxBarSize={40} animationDuration={1500}>
               {data.map((entry, i) => (
                 <Cell key={i} fill={entry.fill} />
