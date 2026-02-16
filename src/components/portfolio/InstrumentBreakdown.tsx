@@ -42,7 +42,7 @@ export function InstrumentBreakdown() {
     if (!active || !payload?.length) return null;
     const d = payload[0].payload;
     return (
-      <div className="bg-bg-tertiary border border-border rounded-lg p-3 shadow-xl">
+      <div className="bg-bg-tertiary/95 backdrop-blur-sm border border-border/70 rounded-lg p-3 shadow-xl shadow-black/40">
         <p className="text-xs font-medium text-text-primary mb-2">{d.name}</p>
         <div className="space-y-1">
           <div className="flex justify-between gap-4">
@@ -69,7 +69,7 @@ export function InstrumentBreakdown() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 sm:mb-5">
         <div>
           <h3 className="text-xs sm:text-sm font-semibold text-text-primary">Instrument Breakdown</h3>
-          <p className="text-[10px] sm:text-xs text-text-muted mt-0.5">Performance by instrument type</p>
+          <p className="text-[10px] sm:text-xs text-text-muted mt-0.5 hidden sm:block">Performance by instrument type</p>
         </div>
         <div className="flex gap-1 bg-bg-primary rounded-lg p-0.5 overflow-x-auto scrollbar-hide">
           {TABS.map(({ key, label }) => (
@@ -93,7 +93,14 @@ export function InstrumentBreakdown() {
             <CartesianGrid strokeDasharray="3 3" stroke="#1e2a3a" vertical={false} />
             <XAxis dataKey="name" tick={{ fontSize: 10, fill: '#8892a4' }} tickLine={false} axisLine={false} />
             <YAxis width={45} tick={{ fontSize: 10, fill: '#4a5568' }} tickLine={false} axisLine={false} tickFormatter={(v: number) => v >= 1000 ? `$${(v/1000).toFixed(0)}K` : `$${v}`} />
-            <Tooltip content={<CustomTooltip />} wrapperStyle={{ zIndex: 100 }} />
+            <Tooltip
+              content={<CustomTooltip />}
+              wrapperStyle={{ zIndex: 100, background: 'transparent', border: 'none', boxShadow: 'none', outline: 'none' }}
+              position={{ y: 10 }}
+              allowEscapeViewBox={{ x: false, y: false }}
+              offset={10}
+              cursor={{ fill: 'rgba(99, 102, 241, 0.08)' }}
+            />
             <Bar dataKey="pnl" radius={[4, 4, 0, 0]} maxBarSize={40} animationDuration={1500}>
               {allData.map((entry, i) => (
                 <Cell key={i} fill={entry.color} />
@@ -106,8 +113,8 @@ export function InstrumentBreakdown() {
       {/* Symbol table */}
       <div className="border-t border-border/50 pt-4">
         <div className="max-h-48 overflow-y-auto space-y-1">
-          {symbolData.slice(0, 10).map(s => (
-            <div key={s.symbol} className="flex items-center justify-between py-1 px-2 rounded hover:bg-bg-tertiary/30">
+          {symbolData.slice(0, 10).map((s, i) => (
+            <div key={s.symbol} className={`flex items-center justify-between py-1.5 px-2 rounded ${i % 2 === 0 ? 'bg-bg-primary/30' : ''} hover:bg-bg-tertiary/30`}>
               <span className="text-[11px] sm:text-xs font-mono font-medium text-text-primary">{s.symbol}</span>
               <div className="flex items-center gap-2 sm:gap-4">
                 <span className="text-[10px] sm:text-xs text-text-muted">{s.tradeCount} trades</span>

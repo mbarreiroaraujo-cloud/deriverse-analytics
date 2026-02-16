@@ -18,7 +18,7 @@ export function MarginUtilization() {
       <div className="flex items-center justify-between mb-4 sm:mb-5">
         <div>
           <h3 className="text-xs sm:text-sm font-semibold text-text-primary">Margin Utilization</h3>
-          <p className="text-[10px] sm:text-xs text-text-muted mt-0.5">Portfolio leverage and margin usage</p>
+          <p className="text-[10px] sm:text-xs text-text-muted mt-0.5 hidden sm:block">Portfolio leverage and margin usage</p>
         </div>
         <span className={`text-xs px-2 py-0.5 rounded ${text} bg-bg-tertiary border border-border/50`}>{label}</span>
       </div>
@@ -51,20 +51,22 @@ export function MarginUtilization() {
         ))}
       </div>
 
+      <div className="h-px bg-border/30 my-4" />
+
       {/* Positions */}
-      <div className="mt-4 pt-4 border-t border-border/50">
+      <div>
         <span className="text-[10px] text-text-muted uppercase block mb-2">Open Positions ({portfolio.positions.length})</span>
         <div className="space-y-2">
           {portfolio.positions.map((pos, i) => (
-            <div key={i} className="flex items-center justify-between py-1.5 px-2 bg-bg-primary rounded-lg border border-border/50">
+            <div key={i} className="flex items-center justify-between py-2 px-3 bg-bg-primary/50 rounded-lg border border-border/30">
               <div className="flex items-center gap-2">
-                <span className={`text-xs font-medium ${pos.side === 'long' ? 'text-accent' : 'text-spot'}`}>
+                <span className={`text-[9px] font-bold px-1 py-0.5 rounded ${pos.side === 'long' ? 'bg-perps/15 text-perps' : 'bg-spot/15 text-spot'}`}>
                   {pos.side === 'long' ? 'L' : 'S'}
                 </span>
-                <span className="text-xs font-mono text-text-primary">{pos.symbol}</span>
-                <span className="text-[10px] text-text-muted">{pos.leverage}x</span>
+                <span className="text-[11px] sm:text-xs font-mono font-medium text-text-primary">{pos.symbol}</span>
+                <span className="text-[9px] text-text-muted">{pos.leverage}x</span>
               </div>
-              <span className={`text-xs font-mono ${pos.unrealizedPnl >= 0 ? 'text-profit' : 'text-loss'}`}>
+              <span className={`text-[11px] sm:text-xs font-mono font-semibold ${pos.unrealizedPnl >= 0 ? 'text-profit' : 'text-loss'}`}>
                 {pos.unrealizedPnl >= 0 ? '+' : ''}${pos.unrealizedPnl.toFixed(2)}
               </span>
             </div>

@@ -27,7 +27,7 @@ export function EquityCurve() {
   const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: Array<{ value: number; dataKey: string }>; label?: string }) => {
     if (!active || !payload?.length) return null;
     return (
-      <div className="bg-bg-tertiary border border-border rounded-lg p-3 shadow-xl">
+      <div className="bg-bg-tertiary/95 backdrop-blur-sm border border-border/70 rounded-lg p-3 shadow-xl shadow-black/40">
         <p className="text-xs text-text-muted mb-2">{label}</p>
         {payload.map((entry) => (
           <div key={entry.dataKey} className="flex items-center justify-between gap-4">
@@ -109,7 +109,14 @@ export function EquityCurve() {
                 reversed
               />
             )}
-            <Tooltip content={<CustomTooltip />} wrapperStyle={{ zIndex: 100 }} />
+            <Tooltip
+              content={<CustomTooltip />}
+              wrapperStyle={{ zIndex: 100, background: 'transparent', border: 'none', boxShadow: 'none', outline: 'none' }}
+              position={{ y: 10 }}
+              allowEscapeViewBox={{ x: false, y: false }}
+              offset={10}
+              cursor={{ stroke: 'rgba(99, 102, 241, 0.3)', strokeWidth: 1 }}
+            />
             <Area
               yAxisId="equity"
               type="monotone"

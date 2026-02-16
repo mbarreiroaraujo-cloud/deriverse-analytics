@@ -12,7 +12,7 @@ export function LiquidationProximity() {
         <AlertTriangle size={16} className="text-spot" />
         <div>
           <h3 className="text-xs sm:text-sm font-semibold text-text-primary">Liquidation Proximity</h3>
-          <p className="text-[10px] sm:text-xs text-text-muted">Distance to liquidation for leveraged positions</p>
+          <p className="text-[10px] sm:text-xs text-text-muted hidden sm:block">Distance to liquidation for leveraged positions</p>
         </div>
       </div>
 

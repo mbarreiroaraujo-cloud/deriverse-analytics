@@ -96,6 +96,22 @@ body {
 
 .recharts-tooltip-wrapper {
   outline: none;
+  /* Kill Recharts default white background */
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Also override the default Recharts tooltip container */
+.recharts-default-tooltip {
+  background: var(--bg-tertiary) !important;
+  border-color: var(--border) !important;
+  border-radius: 8px !important;
+}
+
+/* Ensure custom tooltip pointer events work on mobile */
+.recharts-tooltip-wrapper:focus {
+  outline: none;
 }
 
 /* Animation utilities */
