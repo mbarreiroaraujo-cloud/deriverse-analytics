@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { useStore } from '../../store/useStore';
 import type { RollingWindow } from '../../data/types';
+import { CardTimeRange } from '../shared/CardTimeRange';
 
 function MetricRow({ label, value, format: fmt }: { label: string; value: number; format: 'ratio' | 'percent' | 'usd' }) {
   let display: string;
@@ -44,17 +46,38 @@ function WindowColumn({ title, window }: { title: string; window: RollingWindow 
   );
 }
 
+const WINDOW_MAP: Record<number, 'rolling7d' | 'rolling30d' | 'rolling90d'> = {
+  7: 'rolling7d',
+  30: 'rolling30d',
+  90: 'rolling90d',
+};
+
 export function RollingMetrics() {
   const { metrics } = useStore();
+  const [localDays, setLocalDays] = useState(90);
+
+  const selectedWindow = WINDOW_MAP[localDays] || 'rolling90d';
 
   return (
     <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-hover">
-      <div className="mb-3 sm:mb-5">
-        <h3 className="text-xs sm:text-sm font-semibold text-text-primary">Rolling Metrics</h3>
-        <p className="text-[10px] sm:text-xs text-text-muted mt-0.5">Risk-adjusted performance across time windows</p>
+      <div className="flex items-center justify-between mb-4 sm:mb-5">
+        <div>
+          <h3 className="text-xs sm:text-sm font-semibold text-text-primary">Rolling Metrics</h3>
+          <p className="text-[10px] sm:text-xs text-text-muted mt-0.5 hidden sm:block">Risk-adjusted performance across time windows</p>
+        </div>
+        <CardTimeRange value={localDays} onChange={setLocalDays} />
       </div>
 
-      <div className="flex gap-4 divide-x divide-border/50 overflow-x-auto scroll-smooth-touch">
+      {/* Mobile: show only the selected window */}
+      <div className="sm:hidden">
+        <WindowColumn
+          title={`${localDays} Day`}
+          window={metrics[selectedWindow]}
+        />
+      </div>
+
+      {/* Desktop: show all windows side by side */}
+      <div className="hidden sm:flex gap-4 divide-x divide-border/50 overflow-x-auto scroll-smooth-touch">
         <WindowColumn title="7 Day" window={metrics.rolling7d} />
         <WindowColumn title="30 Day" window={metrics.rolling30d} />
         <WindowColumn title="90 Day" window={metrics.rolling90d} />
