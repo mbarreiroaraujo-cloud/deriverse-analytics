@@ -11,6 +11,26 @@
 
 ---
 
+## Screenshots
+
+<div align="center">
+
+| Dashboard Overview | Analysis & Heatmap | Fees & Rolling Metrics |
+|:---:|:---:|:---:|
+| ![Dashboard](docs/screenshots/01-dashboard-overview.jpg) | ![Analysis](docs/screenshots/02-analysis-heatmap.jpg) | ![Fees](docs/screenshots/03-fees-rolling-metrics.jpg) |
+
+| Trade History | Portfolio Metrics | Risk & Greeks |
+|:---:|:---:|:---:|
+| ![Trades](docs/screenshots/04-trade-history.jpg) | ![Portfolio](docs/screenshots/05-portfolio-metrics.jpg) | ![Risk](docs/screenshots/06-risk-greeks-margin.jpg) |
+
+| Fee Optimizer | Trader Profile | Smart Insights |
+|:---:|:---:|:---:|
+| ![Fee Optimizer](docs/screenshots/07-fee-optimizer.jpg) | ![Profile](docs/screenshots/08-trader-profile.jpg) | ![Insights](docs/screenshots/09-smart-insights.jpg) |
+
+</div>
+
+> 📱 Mobile-first responsive design — optimized for both mobile and desktop trading.
+
 ## Highlights
 
 A dark-first trading analytics platform designed with the institutional terminal aesthetic that professional traders expect. Every number displays in monospace font for perfect alignment. Profit/loss indicators use consistent green/red signaling throughout. The dashboard covers all four Deriverse instrument types: Spot, Perpetual Futures, Options, and Futures.
