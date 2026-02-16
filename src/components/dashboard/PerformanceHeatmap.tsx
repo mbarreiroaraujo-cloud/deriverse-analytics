@@ -24,7 +24,7 @@ function getHeatColor(value: number, max: number): string {
 
 export function PerformanceHeatmap() {
   const { filteredTrades } = useStore();
-  const [localDays, setLocalDays] = useState(90);
+  const [localDays, setLocalDays] = useState(30);
 
   const heatmap = useMemo(() => {
     const cutoff = Date.now() - localDays * 86400000;
@@ -51,7 +51,7 @@ export function PerformanceHeatmap() {
           <h3 className="text-xs sm:text-sm font-semibold text-text-primary">Performance Heatmap</h3>
           <p className="text-[10px] sm:text-xs text-text-muted mt-0.5 hidden sm:block">PnL by time of day and day of week (UTC)</p>
         </div>
-        <CardTimeRange value={localDays} onChange={setLocalDays} />
+        <CardTimeRange value={localDays} onChange={setLocalDays} options={[7, 14, 30, 90]} />
       </div>
 
       <div className="overflow-x-auto scroll-smooth-touch">
