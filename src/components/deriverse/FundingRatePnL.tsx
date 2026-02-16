@@ -37,7 +37,7 @@ export function FundingRatePnL() {
   const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: Array<{ value: number; dataKey: string }>; label?: string }) => {
     if (!active || !payload?.length) return null;
     return (
-      <div className="bg-bg-tertiary border border-border rounded-lg p-3 shadow-xl">
+      <div className="bg-bg-tertiary/95 backdrop-blur-sm border border-border/70 rounded-lg p-3 shadow-xl shadow-black/40">
         <p className="text-xs text-text-muted mb-2">{label}</p>
         {payload.map((entry) => (
           <div key={entry.dataKey} className="flex justify-between gap-4">
@@ -90,7 +90,14 @@ export function FundingRatePnL() {
             <CartesianGrid strokeDasharray="3 3" stroke="#1e2a3a" vertical={false} />
             <XAxis dataKey="date" tick={{ fontSize: 9, fill: '#4a5568' }} tickLine={false} axisLine={false} tickFormatter={(v: string) => v.slice(5)} />
             <YAxis width={45} tick={{ fontSize: 9, fill: '#4a5568' }} tickLine={false} axisLine={false} tickFormatter={(v: number) => v >= 1000 ? `$${(v/1000).toFixed(0)}K` : `$${v}`} />
-            <Tooltip content={<CustomTooltip />} wrapperStyle={{ zIndex: 100 }} />
+            <Tooltip
+              content={<CustomTooltip />}
+              wrapperStyle={{ zIndex: 100, background: 'transparent', border: 'none', boxShadow: 'none', outline: 'none' }}
+              position={{ y: 10 }}
+              allowEscapeViewBox={{ x: false, y: false }}
+              offset={10}
+              cursor={{ fill: 'rgba(99, 102, 241, 0.08)' }}
+            />
             <Bar dataKey="trading" fill="#6366f1" maxBarSize={40} radius={[2, 2, 0, 0]} />
             <Bar dataKey="funding" fill="#f59e0b" maxBarSize={40} radius={[2, 2, 0, 0]} />
           </BarChart>

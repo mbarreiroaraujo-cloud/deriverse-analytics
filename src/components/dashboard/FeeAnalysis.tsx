@@ -49,7 +49,7 @@ export function FeeAnalysis() {
   const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: Array<{ value: number; dataKey: string; color: string }>; label?: string }) => {
     if (!active || !payload?.length) return null;
     return (
-      <div className="bg-bg-tertiary border border-border rounded-lg p-3 shadow-xl">
+      <div className="bg-bg-tertiary/95 backdrop-blur-sm border border-border/70 rounded-lg p-3 shadow-xl shadow-black/40">
         <p className="text-xs text-text-muted mb-2">{label}</p>
         {payload.map((entry) => (
           <div key={entry.dataKey} className="flex items-center justify-between gap-4">
@@ -93,7 +93,14 @@ export function FeeAnalysis() {
             <CartesianGrid strokeDasharray="3 3" stroke="#1e2a3a" vertical={false} />
             <XAxis dataKey="date" tick={{ fontSize: 9, fill: '#4a5568' }} tickLine={false} axisLine={false} tickFormatter={(v: string) => v.slice(5)} />
             <YAxis width={45} tick={{ fontSize: 9, fill: '#4a5568' }} tickLine={false} axisLine={false} tickFormatter={(v: number) => `$${v}`} />
-            <Tooltip content={<CustomTooltip />} wrapperStyle={{ zIndex: 100 }} />
+            <Tooltip
+              content={<CustomTooltip />}
+              wrapperStyle={{ zIndex: 100, background: 'transparent', border: 'none', boxShadow: 'none', outline: 'none' }}
+              position={{ y: 10 }}
+              allowEscapeViewBox={{ x: false, y: false }}
+              offset={10}
+              cursor={{ fill: 'rgba(99, 102, 241, 0.08)' }}
+            />
             <Bar dataKey="entry" stackId="fees" fill="#6366f1" maxBarSize={30} radius={[0, 0, 0, 0]} />
             <Bar dataKey="exit" stackId="fees" fill="#818cf8" maxBarSize={30} radius={[0, 0, 0, 0]} />
             <Bar dataKey="funding" stackId="fees" fill="#a5b4fc" maxBarSize={30} radius={[2, 2, 0, 0]} />

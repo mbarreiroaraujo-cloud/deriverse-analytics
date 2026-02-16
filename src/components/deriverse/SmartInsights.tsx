@@ -50,12 +50,12 @@ export function SmartInsights() {
                 return (
                   <div
                     key={insight.id}
-                    className={`border-l-2 ${border} bg-bg-primary/50 rounded-r-lg p-3`}
+                    className={`border-l-2 ${border} bg-bg-primary/50 rounded-r-lg px-3 py-2.5 sm:p-3`}
                   >
                     <div className="flex items-start gap-2">
                       <Icon size={13} className={`${iconColor} mt-0.5 flex-shrink-0`} />
                       <div>
-                        <h4 className="text-[11px] font-medium text-text-primary mb-0.5">{insight.title}</h4>
+                        <h4 className="text-[11px] font-semibold text-text-primary mb-0.5">{insight.title}</h4>
                         <p className="text-[10px] text-text-muted leading-relaxed line-clamp-2 sm:line-clamp-none">{insight.body}</p>
                       </div>
                     </div>

@@ -27,7 +27,7 @@ A dark-first trading analytics platform designed with the institutional terminal
 
 ## Features
 
-### Core Analytics (13/13 Bounty Requirements)
+### Core Analytics (13/13 Requirements)
 
 | # | Requirement | Implementation | Component |
 |---|------------|----------------|-----------|
