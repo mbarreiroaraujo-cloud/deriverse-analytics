@@ -56,14 +56,14 @@ export function FeeAnalysis() {
   };
 
   return (
-    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20 card-hover">
-      <div className="mb-5">
-        <h3 className="text-sm font-semibold text-text-primary">Fee Analysis</h3>
-        <p className="text-xs text-text-muted mt-0.5">Breakdown by type with cumulative total</p>
+    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-hover">
+      <div className="mb-3 sm:mb-5">
+        <h3 className="text-xs sm:text-sm font-semibold text-text-primary">Fee Analysis</h3>
+        <p className="text-[10px] sm:text-xs text-text-muted mt-0.5">Breakdown by type with cumulative total</p>
       </div>
 
       {/* Summary row */}
-      <div className="grid grid-cols-4 gap-3 mb-5">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
         {[
           { label: 'Total Fees', value: totalFees },
           { label: 'Entry', value: totalEntry },
@@ -72,38 +72,38 @@ export function FeeAnalysis() {
         ].map(({ label, value }) => (
           <div key={label} className="text-center">
             <span className="text-[10px] text-text-muted uppercase block">{label}</span>
-            <span className="text-sm font-mono text-text-primary">${value.toFixed(2)}</span>
+            <span className="text-xs sm:text-sm font-mono font-semibold text-text-primary">${value.toFixed(2)}</span>
           </div>
         ))}
       </div>
 
       {/* Stacked bar chart */}
-      <div className="h-40 mb-4">
+      <div className="h-[140px] sm:h-[180px] mb-4 overflow-hidden rounded-lg">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
+          <BarChart data={data} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#1e2a3a" vertical={false} />
             <XAxis dataKey="date" tick={{ fontSize: 9, fill: '#4a5568' }} tickLine={false} axisLine={false} tickFormatter={(v: string) => v.slice(5)} />
-            <YAxis tick={{ fontSize: 9, fill: '#4a5568' }} tickLine={false} axisLine={false} tickFormatter={(v: number) => `$${v}`} />
-            <Tooltip content={<CustomTooltip />} />
-            <Bar dataKey="entry" stackId="fees" fill="#6366f1" radius={[0, 0, 0, 0]} />
-            <Bar dataKey="exit" stackId="fees" fill="#818cf8" radius={[0, 0, 0, 0]} />
-            <Bar dataKey="funding" stackId="fees" fill="#a5b4fc" radius={[2, 2, 0, 0]} />
+            <YAxis width={45} tick={{ fontSize: 9, fill: '#4a5568' }} tickLine={false} axisLine={false} tickFormatter={(v: number) => `$${v}`} />
+            <Tooltip content={<CustomTooltip />} wrapperStyle={{ zIndex: 100 }} />
+            <Bar dataKey="entry" stackId="fees" fill="#6366f1" maxBarSize={30} radius={[0, 0, 0, 0]} />
+            <Bar dataKey="exit" stackId="fees" fill="#818cf8" maxBarSize={30} radius={[0, 0, 0, 0]} />
+            <Bar dataKey="funding" stackId="fees" fill="#a5b4fc" maxBarSize={30} radius={[2, 2, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </div>
 
       {/* Cumulative line */}
-      <div className="h-24">
+      <div className="h-24 overflow-hidden rounded-lg">
         <p className="text-[10px] text-text-muted mb-1">Cumulative Fees</p>
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
+          <AreaChart data={data} margin={{ top: 0, right: 10, left: 0, bottom: 0 }}>
             <defs>
               <linearGradient id="cumFeeGrad" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="#6366f1" stopOpacity={0.2} />
                 <stop offset="100%" stopColor="#6366f1" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <Area type="monotone" dataKey="cumulative" stroke="#6366f1" strokeWidth={1.5} fill="url(#cumFeeGrad)" />
+            <Area type="monotone" dataKey="cumulative" stroke="#6366f1" strokeWidth={2} fill="url(#cumFeeGrad)" />
           </AreaChart>
         </ResponsiveContainer>
       </div>

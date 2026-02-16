@@ -7,12 +7,12 @@ export function LiquidationProximity() {
   const leveragedPositions = portfolio.positions.filter(p => p.leverage > 1 && p.liquidationPrice > 0);
 
   return (
-    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20 card-hover">
-      <div className="flex items-center gap-2 mb-5">
+    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-hover">
+      <div className="flex items-center gap-2 mb-3 sm:mb-5">
         <AlertTriangle size={16} className="text-spot" />
         <div>
-          <h3 className="text-sm font-semibold text-text-primary">Liquidation Proximity</h3>
-          <p className="text-xs text-text-muted">Distance to liquidation for leveraged positions</p>
+          <h3 className="text-xs sm:text-sm font-semibold text-text-primary">Liquidation Proximity</h3>
+          <p className="text-[10px] sm:text-xs text-text-muted">Distance to liquidation for leveraged positions</p>
         </div>
       </div>
 
@@ -46,7 +46,7 @@ export function LiquidationProximity() {
                   </div>
                   <div className="flex items-center gap-2">
                     <span className={`text-[10px] px-1.5 py-0.5 rounded ${text} bg-bg-tertiary`}>{status}</span>
-                    <span className={`text-xs font-mono ${text}`}>{distance.toFixed(1)}%</span>
+                    <span className={`text-xs font-mono font-semibold ${text}`}>{distance.toFixed(1)}%</span>
                   </div>
                 </div>
                 <div className="h-2 bg-bg-primary rounded-full overflow-hidden">

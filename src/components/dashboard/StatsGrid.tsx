@@ -23,13 +23,15 @@ export function StatsGrid() {
   const losses = metrics.tradeCount - wins;
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
       <MetricCard
         title="Win Rate"
         value={`${metrics.winRate.toFixed(1)}%`}
         subtitle={`${wins}W / ${losses}L`}
         icon={<Target size={16} />}
         delay={50}
+        metric="winRate"
+        metricValue={metrics.winRate}
       />
       <MetricCard
         title="Trades"
@@ -43,6 +45,8 @@ export function StatsGrid() {
         value={formatDuration(metrics.avgTradeDuration)}
         icon={<Clock size={16} />}
         delay={150}
+        metric="avgDuration"
+        metricValue={metrics.avgTradeDuration}
       />
       <MetricCard
         title="Profit Factor"
@@ -50,6 +54,8 @@ export function StatsGrid() {
         subtitle="Gross P / Gross L"
         icon={<TrendingUp size={16} />}
         delay={200}
+        metric="profitFactor"
+        metricValue={metrics.profitFactor}
       />
       <MetricCard
         title="Avg Win"
@@ -71,6 +77,8 @@ export function StatsGrid() {
         valueColor={metrics.expectancy >= 0 ? 'profit' : 'loss'}
         icon={<Zap size={16} />}
         delay={350}
+        metric="expectancy"
+        metricValue={metrics.expectancy}
       />
       <MetricCard
         title="Max Drawdown"
@@ -78,6 +86,8 @@ export function StatsGrid() {
         subtitle={formatUSD(-metrics.maxDrawdown)}
         valueColor="loss"
         delay={400}
+        metric="maxDrawdown"
+        metricValue={metrics.maxDrawdownPercent}
       />
     </div>
   );
