@@ -4,11 +4,30 @@ import { useStore } from '../../store/useStore';
 import { format } from 'date-fns';
 import { CardTimeRange } from '../shared/CardTimeRange';
 
+const INIT_TIME = Date.now();
+
+function FundingTooltip({ active, payload, label }: { active?: boolean; payload?: Array<{ value: number; dataKey: string }>; label?: string }) {
+  if (!active || !payload?.length) return null;
+  return (
+    <div className="bg-bg-tertiary/95 backdrop-blur-sm border border-border/70 rounded-lg p-3 shadow-xl shadow-black/40">
+      <p className="text-xs text-text-muted mb-2">{label}</p>
+      {payload.map((entry) => (
+        <div key={entry.dataKey} className="flex justify-between gap-4">
+          <span className="text-xs text-text-secondary capitalize">{entry.dataKey}</span>
+          <span className={`text-xs font-mono ${entry.value >= 0 ? 'text-profit' : 'text-loss'}`}>
+            {entry.value >= 0 ? '+' : ''}${entry.value.toFixed(2)}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export function FundingRatePnL() {
   const { filteredTrades } = useStore();
   const [localDays, setLocalDays] = useState(30);
 
-  const cutoff = Date.now() - localDays * 86400000;
+  const cutoff = INIT_TIME - localDays * 86400000;
   const localTrades = filteredTrades.filter(t => t.timestamp >= cutoff);
 
   const perpTrades = localTrades.filter(t => t.instrument === 'perpetual');
@@ -33,23 +52,6 @@ export function FundingRatePnL() {
       trading: Math.round(vals.trading * 100) / 100,
       funding: Math.round(-vals.funding * 100) / 100,
     }));
-
-  const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: Array<{ value: number; dataKey: string }>; label?: string }) => {
-    if (!active || !payload?.length) return null;
-    return (
-      <div className="bg-bg-tertiary/95 backdrop-blur-sm border border-border/70 rounded-lg p-3 shadow-xl shadow-black/40">
-        <p className="text-xs text-text-muted mb-2">{label}</p>
-        {payload.map((entry) => (
-          <div key={entry.dataKey} className="flex justify-between gap-4">
-            <span className="text-xs text-text-secondary capitalize">{entry.dataKey}</span>
-            <span className={`text-xs font-mono ${entry.value >= 0 ? 'text-profit' : 'text-loss'}`}>
-              {entry.value >= 0 ? '+' : ''}${entry.value.toFixed(2)}
-            </span>
-          </div>
-        ))}
-      </div>
-    );
-  };
 
   return (
     <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-hover">
@@ -91,7 +93,7 @@ export function FundingRatePnL() {
             <XAxis dataKey="date" tick={{ fontSize: 9, fill: '#4a5568' }} tickLine={false} axisLine={false} tickFormatter={(v: string) => v.slice(5)} />
             <YAxis width={45} tick={{ fontSize: 9, fill: '#4a5568' }} tickLine={false} axisLine={false} tickFormatter={(v: number) => v >= 1000 ? `$${(v/1000).toFixed(0)}K` : `$${v}`} />
             <Tooltip
-              content={<CustomTooltip />}
+              content={<FundingTooltip />}
               wrapperStyle={{ zIndex: 100, background: 'transparent', border: 'none', boxShadow: 'none', outline: 'none' }}
               position={{ y: 10 }}
               allowEscapeViewBox={{ x: false, y: false }}

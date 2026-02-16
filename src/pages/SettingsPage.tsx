@@ -2,7 +2,7 @@ import { useStore, type ExperienceLevel } from '../store/useStore';
 import { Toggle } from '../components/shared/Toggle';
 
 const LEVELS: { value: ExperienceLevel; label: string; desc: string }[] = [
-  { value: 'essential', label: 'Essential', desc: 'Clean metrics only. No tooltips or AI insights.' },
+  { value: 'essential', label: 'Essential', desc: 'Clean metrics only. No tooltips or smart insights.' },
   { value: 'standard', label: 'Standard', desc: 'Tooltips, insights, and trader profile enabled.' },
   { value: 'advanced', label: 'Advanced', desc: 'Everything on. Full contextual education.' },
 ];
@@ -46,7 +46,7 @@ export function SettingsPage() {
           />
           <Toggle
             label="Smart Insights"
-            description="AI-generated trading observations on the dashboard"
+            description="Automated trading observations on the dashboard"
             enabled={experience.showSmartInsights}
             onChange={(v) => setExperienceToggle('showSmartInsights', v)}
           />

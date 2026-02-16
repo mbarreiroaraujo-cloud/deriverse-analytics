@@ -6,13 +6,38 @@ import {
 import { useStore } from '../../store/useStore';
 import { CardTimeRange } from '../shared/CardTimeRange';
 
+const INIT_TIME = Date.now();
+
+function EquityTooltip({ active, payload, label }: { active?: boolean; payload?: Array<{ value: number; dataKey: string }>; label?: string }) {
+  if (!active || !payload?.length) return null;
+  return (
+    <div className="bg-bg-tertiary/95 backdrop-blur-sm border border-border/70 rounded-lg p-3 shadow-xl shadow-black/40">
+      <p className="text-xs text-text-muted mb-2">{label}</p>
+      {payload.map((entry) => (
+        <div key={entry.dataKey} className="flex items-center justify-between gap-4">
+          <span className="text-xs text-text-secondary capitalize">{entry.dataKey}</span>
+          <span className={`text-xs font-mono ${
+            entry.dataKey === 'drawdown' ? 'text-loss' :
+            entry.dataKey === 'pnl' ? (entry.value >= 0 ? 'text-profit' : 'text-loss') :
+            'text-text-primary'
+          }`}>
+            {entry.dataKey === 'equity' ? `$${entry.value.toLocaleString()}` :
+             entry.dataKey === 'drawdown' ? `-${entry.value.toFixed(2)}%` :
+             `${entry.value >= 0 ? '+' : ''}$${entry.value.toFixed(2)}`}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export function EquityCurve() {
   const { metrics } = useStore();
   const [showDrawdown, setShowDrawdown] = useState(true);
   const [localDays, setLocalDays] = useState(90);
 
   const data = useMemo(() => {
-    const cutoff = Date.now() - localDays * 86400000;
+    const cutoff = INIT_TIME - localDays * 86400000;
     return metrics.equityCurve
       .map((point, i) => ({
         date: point.date,
@@ -23,29 +48,6 @@ export function EquityCurve() {
       }))
       .filter(p => p.timestamp >= cutoff);
   }, [metrics.equityCurve, metrics.drawdownCurve, localDays]);
-
-  const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: Array<{ value: number; dataKey: string }>; label?: string }) => {
-    if (!active || !payload?.length) return null;
-    return (
-      <div className="bg-bg-tertiary/95 backdrop-blur-sm border border-border/70 rounded-lg p-3 shadow-xl shadow-black/40">
-        <p className="text-xs text-text-muted mb-2">{label}</p>
-        {payload.map((entry) => (
-          <div key={entry.dataKey} className="flex items-center justify-between gap-4">
-            <span className="text-xs text-text-secondary capitalize">{entry.dataKey}</span>
-            <span className={`text-xs font-mono ${
-              entry.dataKey === 'drawdown' ? 'text-loss' :
-              entry.dataKey === 'pnl' ? (entry.value >= 0 ? 'text-profit' : 'text-loss') :
-              'text-text-primary'
-            }`}>
-              {entry.dataKey === 'equity' ? `$${entry.value.toLocaleString()}` :
-               entry.dataKey === 'drawdown' ? `-${entry.value.toFixed(2)}%` :
-               `${entry.value >= 0 ? '+' : ''}$${entry.value.toFixed(2)}`}
-            </span>
-          </div>
-        ))}
-      </div>
-    );
-  };
 
   return (
     <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-hover">
@@ -110,7 +112,7 @@ export function EquityCurve() {
               />
             )}
             <Tooltip
-              content={<CustomTooltip />}
+              content={<EquityTooltip />}
               wrapperStyle={{ zIndex: 100, background: 'transparent', border: 'none', boxShadow: 'none', outline: 'none' }}
               position={{ y: 10 }}
               allowEscapeViewBox={{ x: false, y: false }}

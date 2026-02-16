@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { useStore } from '../../store/useStore';
 import { CardTimeRange } from '../shared/CardTimeRange';
 
+const INIT_TIME = Date.now();
 const DAYS_FULL = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const DAYS_SHORT = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 const TIME_BLOCKS_FULL = ['00-04', '04-08', '08-12', '12-16', '16-20', '20-24'];
@@ -27,7 +28,7 @@ export function PerformanceHeatmap() {
   const [localDays, setLocalDays] = useState(30);
 
   const heatmap = useMemo(() => {
-    const cutoff = Date.now() - localDays * 86400000;
+    const cutoff = INIT_TIME - localDays * 86400000;
     const localTrades = filteredTrades.filter(t => t.timestamp >= cutoff);
 
     const grid: number[][] = Array.from({ length: 6 }, () => Array(7).fill(0));
