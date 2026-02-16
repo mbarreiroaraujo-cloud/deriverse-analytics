@@ -7,11 +7,28 @@ import { useStore } from '../../store/useStore';
 import { format } from 'date-fns';
 import { CardTimeRange } from '../shared/CardTimeRange';
 
+const INIT_TIME = Date.now();
+
+function FeeTooltip({ active, payload, label }: { active?: boolean; payload?: Array<{ value: number; dataKey: string; color: string }>; label?: string }) {
+  if (!active || !payload?.length) return null;
+  return (
+    <div className="bg-bg-tertiary/95 backdrop-blur-sm border border-border/70 rounded-lg p-3 shadow-xl shadow-black/40">
+      <p className="text-xs text-text-muted mb-2">{label}</p>
+      {payload.map((entry) => (
+        <div key={entry.dataKey} className="flex items-center justify-between gap-4">
+          <span className="text-xs text-text-secondary capitalize">{entry.dataKey}</span>
+          <span className="text-xs font-mono text-text-primary">${entry.value.toFixed(2)}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export function FeeAnalysis() {
   const { filteredTrades } = useStore();
   const [localDays, setLocalDays] = useState(30);
 
-  const cutoff = Date.now() - localDays * 86400000;
+  const cutoff = INIT_TIME - localDays * 86400000;
   const localTrades = filteredTrades.filter(t => t.timestamp >= cutoff);
 
   // Group fees by day
@@ -28,38 +45,23 @@ export function FeeAnalysis() {
   }
 
   const sortedDays = Array.from(feesByDay.keys()).sort();
-  let cumulative = 0;
-  const data = sortedDays.map(day => {
+  const data = sortedDays.reduce<Array<{ date: string; entry: number; exit: number; funding: number; cumulative: number }>>((acc, day) => {
     const fees = feesByDay.get(day)!;
-    cumulative += fees.total;
-    return {
+    const prevCumulative = acc.length > 0 ? acc[acc.length - 1].cumulative : 0;
+    acc.push({
       date: day,
       entry: Math.round(fees.entry * 100) / 100,
       exit: Math.round(fees.exit * 100) / 100,
       funding: Math.round(fees.funding * 100) / 100,
-      cumulative: Math.round(cumulative * 100) / 100,
-    };
-  });
+      cumulative: Math.round((prevCumulative + fees.total) * 100) / 100,
+    });
+    return acc;
+  }, []);
 
   const totalFees = localTrades.reduce((s, t) => s + t.fees.total, 0);
   const totalEntry = localTrades.reduce((s, t) => s + t.fees.entry, 0);
   const totalExit = localTrades.reduce((s, t) => s + t.fees.exit, 0);
   const totalFunding = localTrades.reduce((s, t) => s + Math.abs(t.fees.funding), 0);
-
-  const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: Array<{ value: number; dataKey: string; color: string }>; label?: string }) => {
-    if (!active || !payload?.length) return null;
-    return (
-      <div className="bg-bg-tertiary/95 backdrop-blur-sm border border-border/70 rounded-lg p-3 shadow-xl shadow-black/40">
-        <p className="text-xs text-text-muted mb-2">{label}</p>
-        {payload.map((entry) => (
-          <div key={entry.dataKey} className="flex items-center justify-between gap-4">
-            <span className="text-xs text-text-secondary capitalize">{entry.dataKey}</span>
-            <span className="text-xs font-mono text-text-primary">${entry.value.toFixed(2)}</span>
-          </div>
-        ))}
-      </div>
-    );
-  };
 
   return (
     <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-hover">
@@ -94,7 +96,7 @@ export function FeeAnalysis() {
             <XAxis dataKey="date" tick={{ fontSize: 9, fill: '#4a5568' }} tickLine={false} axisLine={false} tickFormatter={(v: string) => v.slice(5)} />
             <YAxis width={45} tick={{ fontSize: 9, fill: '#4a5568' }} tickLine={false} axisLine={false} tickFormatter={(v: number) => `$${v}`} />
             <Tooltip
-              content={<CustomTooltip />}
+              content={<FeeTooltip />}
               wrapperStyle={{ zIndex: 100, background: 'transparent', border: 'none', boxShadow: 'none', outline: 'none' }}
               position={{ y: 10 }}
               allowEscapeViewBox={{ x: false, y: false }}

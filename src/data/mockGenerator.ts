@@ -50,7 +50,7 @@ const EMOTIONS: Emotion[] = ['disciplined', 'fomo', 'revenge', 'fearful', 'greed
 const SETUPS: Setup[] = ['breakout', 'mean-reversion', 'trend', 'range', 'news', 'other'];
 const GRADES: Grade[] = ['A', 'B', 'C', 'D'];
 
-function getTradeSize(rng: SeededRandom, symbol: string, _instrument: Instrument): number {
+function getTradeSize(rng: SeededRandom, symbol: string): number {
   const base = BASE_PRICES[symbol] || 100;
   if (base > 10000) return rng.range(0.01, 0.5);
   if (base > 100) return rng.range(1, 50);
@@ -98,7 +98,6 @@ export function generateTrades(seed: number = 42): Trade[] {
 
   for (let i = 0; i < numTrades; i++) {
     // Temporal clustering: more trades during Asian (00-08 UTC) and US (13-21 UTC) sessions
-    let timestamp: number;
     const dayOffset = rng.range(0, 89);
     const day = ninetyDaysAgo + dayOffset * 86400000;
 
@@ -111,7 +110,7 @@ export function generateTrades(seed: number = 42): Trade[] {
     } else {
       hour = rng.range(0, 24); // Random
     }
-    timestamp = day + hour * 3600000 + rng.range(0, 3600000);
+    const timestamp = day + hour * 3600000 + rng.range(0, 3600000);
 
     // Instrument distribution: 40% spot, 35% perps, 15% options, 10% futures
     const instRoll = rng.next();
@@ -154,7 +153,7 @@ export function generateTrades(seed: number = 42): Trade[] {
 
     // PnL magnitude: Pareto-distributed (many small, few large)
     const magnitude = rng.pareto(2.5) * basePrice * volatility;
-    const size = getTradeSize(rng, symbol, instrument);
+    const size = getTradeSize(rng, symbol);
     const notional = size * entryPrice;
     let pnlBase = magnitude * size * leverage;
 
@@ -201,7 +200,7 @@ export function generateTrades(seed: number = 42): Trade[] {
       const emotionWeights = inDrawdown
         ? [0.1, 0.25, 0.3, 0.2, 0.1, 0.05]
         : [0.4, 0.1, 0.05, 0.1, 0.1, 0.25];
-      let emotionRoll = rng.next();
+      const emotionRoll = rng.next();
       let emotionIdx = 0;
       let cumWeight = 0;
       for (let e = 0; e < emotionWeights.length; e++) {
@@ -280,7 +279,7 @@ export function generateTrades(seed: number = 42): Trade[] {
   return trades;
 }
 
-export function generatePositions(_rng?: SeededRandom): Position[] {
+export function generatePositions(): Position[] {
   return [
     {
       instrument: 'perpetual', symbol: 'SOL-PERP', side: 'long', size: 120,

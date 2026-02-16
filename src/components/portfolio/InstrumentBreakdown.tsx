@@ -18,11 +18,48 @@ const INSTRUMENT_COLORS: Record<string, string> = {
   futures: '#06b6d4',
 };
 
+interface InstrumentData {
+  name: string;
+  pnl: number;
+  winRate: number;
+  trades: number;
+  fees: number;
+  volume: number;
+  avgPnl: number;
+  color: string;
+}
+
+function CustomTooltip({ active, payload }: { active?: boolean; payload?: Array<{ payload: InstrumentData }> }) {
+  if (!active || !payload?.length) return null;
+  const d = payload[0].payload;
+  return (
+    <div className="bg-bg-tertiary/95 backdrop-blur-sm border border-border/70 rounded-lg p-3 shadow-xl shadow-black/40">
+      <p className="text-xs font-medium text-text-primary mb-2">{d.name}</p>
+      <div className="space-y-1">
+        <div className="flex justify-between gap-4">
+          <span className="text-xs text-text-muted">PnL</span>
+          <span className={`text-xs font-mono ${d.pnl >= 0 ? 'text-profit' : 'text-loss'}`}>
+            {d.pnl >= 0 ? '+' : ''}${d.pnl.toFixed(2)}
+          </span>
+        </div>
+        <div className="flex justify-between gap-4">
+          <span className="text-xs text-text-muted">Win Rate</span>
+          <span className="text-xs font-mono text-text-secondary">{d.winRate.toFixed(1)}%</span>
+        </div>
+        <div className="flex justify-between gap-4">
+          <span className="text-xs text-text-muted">Trades</span>
+          <span className="text-xs font-mono text-text-secondary">{d.trades}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function InstrumentBreakdown() {
   const { metrics } = useStore();
   const [activeTab, setActiveTab] = useState<Instrument | 'all'>('all');
 
-  const allData = Object.entries(metrics.byInstrument).map(([key, m]) => ({
+  const allData: InstrumentData[] = Object.entries(metrics.byInstrument).map(([key, m]) => ({
     name: key === 'perpetual' ? 'Perps' : key.charAt(0).toUpperCase() + key.slice(1),
     pnl: m.pnl,
     winRate: m.winRate,
@@ -37,32 +74,6 @@ export function InstrumentBreakdown() {
     .filter(([, m]) => activeTab === 'all' || m.tradeCount > 0)
     .map(([sym, m]) => ({ symbol: sym, ...m }))
     .sort((a, b) => b.pnl - a.pnl);
-
-  const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: Array<{ payload: typeof allData[0] }> }) => {
-    if (!active || !payload?.length) return null;
-    const d = payload[0].payload;
-    return (
-      <div className="bg-bg-tertiary/95 backdrop-blur-sm border border-border/70 rounded-lg p-3 shadow-xl shadow-black/40">
-        <p className="text-xs font-medium text-text-primary mb-2">{d.name}</p>
-        <div className="space-y-1">
-          <div className="flex justify-between gap-4">
-            <span className="text-xs text-text-muted">PnL</span>
-            <span className={`text-xs font-mono ${d.pnl >= 0 ? 'text-profit' : 'text-loss'}`}>
-              {d.pnl >= 0 ? '+' : ''}${d.pnl.toFixed(2)}
-            </span>
-          </div>
-          <div className="flex justify-between gap-4">
-            <span className="text-xs text-text-muted">Win Rate</span>
-            <span className="text-xs font-mono text-text-secondary">{d.winRate.toFixed(1)}%</span>
-          </div>
-          <div className="flex justify-between gap-4">
-            <span className="text-xs text-text-muted">Trades</span>
-            <span className="text-xs font-mono text-text-secondary">{d.trades}</span>
-          </div>
-        </div>
-      </div>
-    );
-  };
 
   return (
     <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-hover">
