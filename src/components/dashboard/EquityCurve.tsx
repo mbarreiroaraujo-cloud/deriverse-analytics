@@ -55,7 +55,7 @@ export function EquityCurve() {
           <p className="text-[10px] sm:text-xs text-text-muted mt-0.5 hidden sm:block">Portfolio value over time with drawdown overlay</p>
         </div>
         <div className="flex items-center gap-2">
-          <CardTimeRange value={localDays} onChange={setLocalDays} />
+          <CardTimeRange value={localDays} onChange={setLocalDays} options={[7, 30, 90, 180, 365]} />
           <button
             onClick={() => setShowDrawdown(!showDrawdown)}
             className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors ${

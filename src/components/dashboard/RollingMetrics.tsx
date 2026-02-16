@@ -50,6 +50,8 @@ const WINDOW_MAP: Record<number, 'rolling7d' | 'rolling30d' | 'rolling90d'> = {
   7: 'rolling7d',
   30: 'rolling30d',
   90: 'rolling90d',
+  180: 'rolling90d',
+  365: 'rolling90d',
 };
 
 export function RollingMetrics() {
@@ -65,7 +67,7 @@ export function RollingMetrics() {
           <h3 className="text-xs sm:text-sm font-semibold text-text-primary">Rolling Metrics</h3>
           <p className="text-[10px] sm:text-xs text-text-muted mt-0.5 hidden sm:block">Risk-adjusted performance across time windows</p>
         </div>
-        <CardTimeRange value={localDays} onChange={setLocalDays} />
+        <CardTimeRange value={localDays} onChange={setLocalDays} options={[30, 90, 180, 365]} />
       </div>
 
       {/* Mobile: show only the selected window */}

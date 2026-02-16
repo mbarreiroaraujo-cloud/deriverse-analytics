@@ -9,7 +9,7 @@ import { CardTimeRange } from '../shared/CardTimeRange';
 
 export function FeeAnalysis() {
   const { filteredTrades } = useStore();
-  const [localDays, setLocalDays] = useState(90);
+  const [localDays, setLocalDays] = useState(30);
 
   const cutoff = Date.now() - localDays * 86400000;
   const localTrades = filteredTrades.filter(t => t.timestamp >= cutoff);

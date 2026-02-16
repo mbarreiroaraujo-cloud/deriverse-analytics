@@ -3,12 +3,17 @@ import { useStore } from '../../store/useStore';
 import { ExportButton } from '../shared/ExportButton';
 
 export function Header() {
-  const { filteredTrades, filters, setDateRange, metrics, sidebarOpen, setSidebarOpen } = useStore();
+  const { filteredTrades, allTrades, filters, setDateRange, metrics, sidebarOpen, setSidebarOpen } = useStore();
 
   const periods = [
+    { label: '24H', days: 1 },
     { label: '7D', days: 7 },
+    { label: '14D', days: 14 },
     { label: '30D', days: 30 },
     { label: '90D', days: 90 },
+    { label: '6M', days: 180 },
+    { label: '1Y', days: 365 },
+    { label: 'ALL', days: 9999 },
   ];
 
   const activeDays = Math.round((filters.dateRange[1] - filters.dateRange[0]) / 86400000);
@@ -27,15 +32,24 @@ export function Header() {
         </button>
 
         <Calendar size={14} className="text-text-muted hidden sm:block" />
-        <div className="flex items-center gap-1 bg-bg-primary rounded-md p-0.5">
+        <div className="flex items-center gap-1 bg-bg-primary rounded-md p-0.5 overflow-x-auto scrollbar-hide">
           {periods.map(({ label, days }) => (
             <button
               key={label}
-              onClick={() => setDateRange([Date.now() - days * 86400000, Date.now()])}
-              className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
-                Math.abs(activeDays - days) < 2
-                  ? 'bg-accent/15 text-accent'
-                  : 'text-text-muted hover:text-text-secondary'
+              onClick={() => {
+                if (days === 9999) {
+                  const earliest = Math.min(...allTrades.map(t => t.timestamp));
+                  setDateRange([earliest, Date.now()]);
+                } else {
+                  setDateRange([Date.now() - days * 86400000, Date.now()]);
+                }
+              }}
+              className={`px-2 sm:px-3 py-1 rounded text-[10px] sm:text-xs font-medium whitespace-nowrap transition-colors ${
+                days === 9999
+                  ? activeDays > 366 ? 'bg-accent/15 text-accent' : 'text-text-muted hover:text-text-secondary'
+                  : Math.abs(activeDays - days) < 2
+                    ? 'bg-accent/15 text-accent'
+                    : 'text-text-muted hover:text-text-secondary'
               }`}
             >
               {label}
