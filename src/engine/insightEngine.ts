@@ -99,7 +99,7 @@ const METRIC_INSIGHTS: Record<string, MetricInsight> = {
       { label: 'Solid', min: 10, max: 50, color: '#22c55e' },
       { label: 'Strong', min: 50, max: Infinity, color: '#6366f1' },
     ],
-    getPersonalInsight: (value, _ctx) => {
+    getPersonalInsight: (value) => {
       const projected = value * 100;
       return `Over your next 100 trades at current stats, you'd expect to make ~$${projected.toFixed(0)}.`;
     },
