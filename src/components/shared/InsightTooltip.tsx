@@ -19,6 +19,20 @@ export function InsightTooltip({ metric, value, children }: InsightTooltipProps)
   const { filteredTrades, metrics, portfolio } = useStore();
 
   const insight = getMetricInsight(metric);
+
+  // Close on outside click (mobile) — must be before early return to satisfy rules-of-hooks
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: MouseEvent) => {
+      if (tooltipRef.current && !tooltipRef.current.contains(e.target as Node) &&
+          triggerRef.current && !triggerRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener('click', handler);
+    return () => document.removeEventListener('click', handler);
+  }, [open]);
+
   if (!insight) return <>{children}</>;
 
   const ctx: TradeContext = { trades: filteredTrades, metrics, portfolio };
@@ -50,19 +64,6 @@ export function InsightTooltip({ metric, value, children }: InsightTooltipProps)
     updatePosition();
     setOpen(prev => !prev);
   };
-
-  // Close on outside click (mobile)
-  useEffect(() => {
-    if (!open) return;
-    const handler = (e: MouseEvent) => {
-      if (tooltipRef.current && !tooltipRef.current.contains(e.target as Node) &&
-          triggerRef.current && !triggerRef.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener('click', handler);
-    return () => document.removeEventListener('click', handler);
-  }, [open]);
 
   return (
     <div className="relative inline-flex items-center gap-1" ref={triggerRef}>
