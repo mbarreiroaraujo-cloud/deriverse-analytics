@@ -86,7 +86,7 @@ A dark-first trading analytics platform designed with the institutional terminal
 
 ### Deriverse-Specific
 
-- **Fee Subscription Optimizer:** Calculate ROI for Basic ($49/mo), Pro ($149/mo), and Elite ($499/mo) tiers showing exact savings based on your maker/taker volume
+- **Fee Subscription Optimizer:** Calculate ROI for Basic ($49/mo), Pro ($149/mo), and Enterprise ($499/mo) tiers showing exact savings based on your maker/taker volume
 - **Funding Rate PnL Separation:** Split perpetual returns into trading PnL vs. funding cost — a metric specific to perps traders
 - **Greeks Exposure:** Aggregate Delta, Gamma, Theta, Vega across options portfolio
 - **Liquidation Proximity:** Visual distance-to-liquidation for leveraged positions
@@ -126,7 +126,7 @@ The dashboard loads with realistic simulated data (600+ trades over 90 days) —
 | Charts | Recharts | React-native composable charts |
 | State | Zustand | Minimal boilerplate, performant selectors |
 | Animations | Framer Motion | Declarative page transitions |
-| Fonts | JetBrains Mono + DM Sans | Terminal aesthetic for numbers |
+| Fonts | JetBrains Mono + Inter | Terminal aesthetic for numbers |
 | Build | Vite 7 | Fast HMR, optimized production builds |
 
 ### Data Flow
@@ -216,8 +216,8 @@ The mock data generator produces realistic trading data using a seeded PRNG for 
 
 Professional trading tools are dark, information-dense, and use monospace fonts for numeric alignment. This dashboard follows Bloomberg Terminal design principles adapted for modern web:
 
-- **Dark-first:** `#0a0e17` background — near-black blue, not pure black
-- **Typography:** JetBrains Mono for all numbers and metrics, DM Sans for body text
+- **Dark-first:** `#0b0f19` background — near-black blue, not pure black
+- **Typography:** JetBrains Mono for all numbers and metrics, Inter for body text
 - **Trading signals:** Green (#22c55e) for profit, Red (#ef4444) for loss — no ambiguity
 - **Instrument colors:** Amber (Spot), Indigo (Perps), Purple (Options), Cyan (Futures)
 - **Information density:** Multiple metrics visible at once, progressive disclosure on click

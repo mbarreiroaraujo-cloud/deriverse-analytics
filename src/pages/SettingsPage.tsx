@@ -91,8 +91,8 @@ export function SettingsPage() {
       <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20">
         <h3 className="text-sm font-semibold text-text-primary mb-5">About</h3>
         <p className="text-xs text-text-secondary leading-relaxed">
-          Deriverse Analytics is a professional trading analytics dashboard built for active derivatives traders on Solana.
-          It features institutional-grade metrics including Sharpe Ratio, Sortino Ratio, Profit Factor, and Expectancy calculations,
+          Built for the Deriverse ecosystem on Solana. Designed to complement the Deriverse trading experience with institutional-grade analytics.
+          Features include Sharpe Ratio, Sortino Ratio, Profit Factor, and Expectancy calculations,
           along with an intelligent trade journal and Deriverse-specific fee optimization tools.
         </p>
         <p className="text-xs text-text-muted mt-3">

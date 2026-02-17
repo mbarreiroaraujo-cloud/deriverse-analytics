@@ -74,6 +74,14 @@ export function Sidebar() {
           })}
         </nav>
 
+        {/* Powered-by badge */}
+        <div className={`px-3 py-3 border-t border-border ${sidebarCollapsed ? 'lg:hidden' : ''}`}>
+          <div className="text-[10px] text-text-muted flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+            Solana Devnet &bull; Deriverse Protocol
+          </div>
+        </div>
+
         {/* Collapse toggle — desktop only */}
         <div className="hidden lg:block px-2 py-3 border-t border-border">
           <button
