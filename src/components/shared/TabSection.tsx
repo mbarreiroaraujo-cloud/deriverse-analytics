@@ -20,7 +20,7 @@ export function TabSection({ tabs, defaultTab }: TabSectionProps) {
   return (
     <div className="flex sm:block">
       {/* Vertical tab column — mobile only */}
-      <div className="flex flex-col gap-1 w-[72px] shrink-0 border-r border-border/30 bg-bg-secondary/50 pt-2 sm:hidden">
+      <div className="flex flex-col gap-1 w-[56px] shrink-0 border-r border-border/30 bg-bg-secondary/50 pt-2 sm:hidden">
         {tabs.map(tab => (
           <button
             key={tab.id}
@@ -62,7 +62,7 @@ export function TabSection({ tabs, defaultTab }: TabSectionProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.15 }}
-            className="pl-3 pr-1 sm:pl-0 sm:pr-0"
+            className="pl-3 pr-2 pt-3 pb-4 sm:pl-0 sm:pr-0 sm:pt-0 sm:pb-0"
           >
             {activeContent}
           </motion.div>

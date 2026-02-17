@@ -57,7 +57,7 @@ export function PnLCard() {
           </div>
         </div>
 
-        <div className={`font-mono text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 ${isProfit ? 'text-profit' : 'text-loss'}`}>
+        <div className={`font-mono text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 min-w-0 truncate ${isProfit ? 'text-profit' : 'text-loss'}`}>
           {formatUSD(displayValue)}
         </div>
 

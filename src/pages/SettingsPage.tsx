@@ -13,7 +13,7 @@ export function SettingsPage() {
   const { connected, publicKey } = useWallet();
 
   return (
-    <div className="max-w-2xl space-y-8 animate-fade-in">
+    <div className="max-w-2xl space-y-8 animate-fade-in px-1 sm:px-0">
       {/* Dashboard Experience */}
       <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20">
         <h3 className="text-sm font-semibold text-text-primary mb-2">Dashboard Experience</h3>
