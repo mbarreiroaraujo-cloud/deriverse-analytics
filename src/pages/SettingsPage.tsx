@@ -1,5 +1,6 @@
 import { useStore, type ExperienceLevel } from '../store/useStore';
 import { Toggle } from '../components/shared/Toggle';
+import { useWallet } from '@solana/wallet-adapter-react';
 
 const LEVELS: { value: ExperienceLevel; label: string; desc: string }[] = [
   { value: 'essential', label: 'Essential', desc: 'Clean metrics only. No tooltips or smart insights.' },
@@ -9,6 +10,7 @@ const LEVELS: { value: ExperienceLevel; label: string; desc: string }[] = [
 
 export function SettingsPage() {
   const { allTrades, experience, setExperienceLevel, setExperienceToggle } = useStore();
+  const { connected, publicKey } = useWallet();
 
   return (
     <div className="max-w-2xl space-y-8 animate-fade-in">
@@ -91,8 +93,8 @@ export function SettingsPage() {
       <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20">
         <h3 className="text-sm font-semibold text-text-primary mb-5">About</h3>
         <p className="text-xs text-text-secondary leading-relaxed">
-          Deriverse Analytics is a professional trading analytics dashboard built for active derivatives traders on Solana.
-          It features institutional-grade metrics including Sharpe Ratio, Sortino Ratio, Profit Factor, and Expectancy calculations,
+          Built for the Deriverse ecosystem on Solana. Designed to complement the Deriverse trading experience with institutional-grade analytics.
+          Features include Sharpe Ratio, Sortino Ratio, Profit Factor, and Expectancy calculations,
           along with an intelligent trade journal and Deriverse-specific fee optimization tools.
         </p>
         <p className="text-xs text-text-muted mt-3">
@@ -110,6 +112,28 @@ export function SettingsPage() {
               Using realistic simulated trading data with {allTrades.length} trades across 90 days
             </p>
           </div>
+        </div>
+      </div>
+
+      {/* Network Status */}
+      <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20">
+        <h3 className="text-sm font-semibold text-text-primary mb-5">Network Status</h3>
+        <div className="space-y-3">
+          <div className="flex items-center gap-3 p-3 bg-bg-primary rounded-lg border border-border/50">
+            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+            <div>
+              <span className="text-xs font-medium text-text-primary">Connected to Solana Devnet</span>
+              <p className="text-[10px] text-text-muted mt-0.5">
+                RPC: https://api.devnet.solana.com
+              </p>
+            </div>
+          </div>
+          {connected && publicKey && (
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-text-muted">Wallet</span>
+              <span className="text-xs font-mono text-text-secondary">{publicKey.toBase58()}</span>
+            </div>
+          )}
         </div>
       </div>
     </div>

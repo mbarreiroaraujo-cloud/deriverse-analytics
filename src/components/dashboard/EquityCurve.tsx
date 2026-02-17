@@ -82,10 +82,10 @@ export function EquityCurve() {
                 <stop offset="100%" stopColor="#ef4444" stopOpacity={0.05} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#1e2a3a" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" vertical={false} />
             <XAxis
               dataKey="date"
-              tick={{ fontSize: 10, fill: '#4a5568' }}
+              tick={{ fontSize: 10, fill: '#475569' }}
               tickLine={false}
               axisLine={false}
               tickFormatter={(val: string) => val.slice(5)}
@@ -94,7 +94,7 @@ export function EquityCurve() {
               yAxisId="equity"
               orientation="left"
               width={45}
-              tick={{ fontSize: 10, fill: '#4a5568' }}
+              tick={{ fontSize: 10, fill: '#475569' }}
               tickLine={false}
               axisLine={false}
               tickFormatter={(val: number) => val >= 1000 ? `$${(val / 1000).toFixed(0)}K` : `$${val}`}
@@ -104,7 +104,7 @@ export function EquityCurve() {
                 yAxisId="dd"
                 orientation="right"
                 width={45}
-                tick={{ fontSize: 10, fill: '#4a5568' }}
+                tick={{ fontSize: 10, fill: '#475569' }}
                 tickLine={false}
                 axisLine={false}
                 tickFormatter={(val: number) => `-${val.toFixed(1)}%`}

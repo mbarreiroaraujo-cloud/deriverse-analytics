@@ -39,7 +39,7 @@ export function PnLCard() {
   const sparkData = metrics.equityCurve.map(p => p.equity);
 
   return (
-    <div className="relative overflow-hidden bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-hover">
+    <div className="relative overflow-hidden bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-hover card-accent">
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-4">
           {experience.showInsightTooltips ? (

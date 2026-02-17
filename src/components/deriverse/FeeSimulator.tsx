@@ -13,7 +13,7 @@ const TIERS: Tier[] = [
   { name: 'No Subscription', monthlyFee: 0, makerDiscount: 0, takerDiscount: 0 },
   { name: 'Basic', monthlyFee: 49, makerDiscount: 0.3, takerDiscount: 0.25 },
   { name: 'Pro', monthlyFee: 149, makerDiscount: 0.5, takerDiscount: 0.5 },
-  { name: 'Elite', monthlyFee: 499, makerDiscount: 0.7, takerDiscount: 0.75 },
+  { name: 'Enterprise', monthlyFee: 499, makerDiscount: 0.7, takerDiscount: 0.75 },
 ];
 
 function formatFee(value: number, compact = false): string {
@@ -62,7 +62,7 @@ export function FeeSimulator() {
   const breakEvenTrades = avgDiscountPerTrade > 0 ? Math.ceil(tier.monthlyFee / avgDiscountPerTrade) : Infinity;
 
   return (
-    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-hover">
+    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-hover card-accent">
       <div className="flex items-center gap-3 mb-4 sm:mb-5">
         <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg bg-accent/20 flex items-center justify-center shrink-0">
           <Wallet size={16} className="text-accent" />

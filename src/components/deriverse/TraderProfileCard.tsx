@@ -25,7 +25,7 @@ export function TraderProfileCard() {
   return (
     <div className="space-y-4 sm:space-y-5">
       {/* Style card */}
-      <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20">
+      <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20 card-accent">
         <div className="flex items-center gap-3 mb-4">
           <div className="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center">
             <StyleIcon size={20} className="text-accent" />
