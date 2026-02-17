@@ -86,7 +86,7 @@ export function TradeTable() {
       </div>
 
       {/* Mobile: Card layout */}
-      <div className="sm:hidden p-3 space-y-3">
+      <div className="sm:hidden p-4 space-y-3">
         {paginated.map((trade) => (
           <TradeCard
             key={trade.id}
