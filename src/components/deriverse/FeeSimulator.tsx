@@ -13,7 +13,7 @@ const TIERS: Tier[] = [
   { name: 'No Subscription', monthlyFee: 0, makerDiscount: 0, takerDiscount: 0 },
   { name: 'Basic', monthlyFee: 49, makerDiscount: 0.3, takerDiscount: 0.25 },
   { name: 'Pro', monthlyFee: 149, makerDiscount: 0.5, takerDiscount: 0.5 },
-  { name: 'Elite', monthlyFee: 499, makerDiscount: 0.7, takerDiscount: 0.75 },
+  { name: 'Enterprise', monthlyFee: 499, makerDiscount: 0.7, takerDiscount: 0.75 },
 ];
 
 function formatFee(value: number, compact = false): string {
