@@ -31,6 +31,10 @@
 
 > 📱 Mobile-first responsive design — optimized for both mobile and desktop trading.
 
+## Technical Roadmap
+
+See [docs/TECHNICAL_ROADMAP.md](docs/TECHNICAL_ROADMAP.md) for proposed advanced features including live SDK integration, cross-instrument risk engine, options analytics, and subscription fee intelligence.
+
 ## Highlights
 
 A dark-first trading analytics platform designed with the institutional terminal aesthetic that professional traders expect. Every number displays in monospace font for perfect alignment. Profit/loss indicators use consistent green/red signaling throughout. The dashboard covers all four Deriverse instrument types: Spot, Perpetual Futures, Options, and Futures.
