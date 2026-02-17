@@ -44,7 +44,7 @@ export function MetricCard({ title, value, subtitle, icon, trend, trendValue, va
         )}
         {icon && <span className="text-text-muted">{icon}</span>}
       </div>
-      <div className={`font-mono text-base sm:text-lg lg:text-xl font-semibold ${colorClass} mb-1`}>
+      <div className={`font-mono text-base sm:text-lg lg:text-xl font-semibold ${colorClass} mb-1 truncate`}>
         {value}
       </div>
       <div className="flex items-center gap-2">

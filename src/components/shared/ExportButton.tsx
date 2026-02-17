@@ -56,10 +56,11 @@ export function ExportButton({ trades, filename = 'deriverse-trades' }: ExportBu
   return (
     <button
       onClick={exportCSV}
-      className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-text-secondary bg-bg-secondary border border-border rounded-md hover:border-accent/30 hover:text-text-primary transition-colors"
+      className="flex items-center gap-1.5 px-2 sm:px-3 py-1.5 text-xs font-medium text-text-secondary bg-bg-secondary border border-border rounded-md hover:border-accent/30 hover:text-text-primary transition-colors"
+      title="Export CSV"
     >
       <Download size={14} />
-      Export CSV
+      <span className="hidden sm:inline">Export CSV</span>
     </button>
   );
 }

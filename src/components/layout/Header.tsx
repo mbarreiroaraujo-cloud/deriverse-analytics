@@ -37,9 +37,9 @@ export function Header() {
   const activeDays = Math.round((filters.dateRange[1] - filters.dateRange[0]) / 86400000);
 
   return (
-    <header className="h-14 bg-bg-secondary border-b border-border flex items-center justify-between px-4 lg:px-6 sticky top-0 z-30">
+    <header className="h-14 bg-bg-secondary border-b border-border flex items-center justify-between px-3 sm:px-4 lg:px-6 sticky top-0 z-30 gap-2">
       {/* Left: Hamburger + Period filter */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
         {/* Hamburger — mobile/tablet only */}
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -78,7 +78,7 @@ export function Header() {
       </div>
 
       {/* Right: Actions */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 sm:gap-3 shrink-0">
         <ExportButton trades={filteredTrades} />
         {connected && publicKey ? (
           <button
