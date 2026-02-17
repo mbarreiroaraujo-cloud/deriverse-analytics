@@ -1,9 +1,27 @@
+import { useState, useEffect } from 'react';
 import { Wallet, Calendar, Menu } from 'lucide-react';
 import { useStore } from '../../store/useStore';
 import { ExportButton } from '../shared/ExportButton';
+import { useWallet } from '@solana/wallet-adapter-react';
+import { useWalletModal } from '@solana/wallet-adapter-react-ui';
+import { useConnection } from '@solana/wallet-adapter-react';
+import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 
 export function Header() {
   const { filteredTrades, allTrades, filters, setDateRange, metrics, sidebarOpen, setSidebarOpen } = useStore();
+  const { publicKey, disconnect, connected } = useWallet();
+  const { setVisible } = useWalletModal();
+  const { connection } = useConnection();
+  const [balance, setBalance] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (!publicKey || !connection) return;
+    let cancelled = false;
+    connection.getBalance(publicKey).then(lamports => {
+      if (!cancelled) setBalance(lamports / LAMPORTS_PER_SOL);
+    }).catch(() => {});
+    return () => { cancelled = true; };
+  }, [publicKey, connection]);
 
   const periods = [
     { label: '24H', days: 1 },
@@ -62,11 +80,28 @@ export function Header() {
       {/* Right: Actions */}
       <div className="flex items-center gap-3">
         <ExportButton trades={filteredTrades} />
-        <div className="flex items-center gap-2 px-3 py-1.5 bg-bg-primary border border-border rounded-md">
-          <Wallet size={14} className="text-accent" />
-          <span className="text-xs font-mono font-medium text-text-secondary hidden sm:inline">7xKp...3mNq</span>
-          <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-        </div>
+        {connected && publicKey ? (
+          <button
+            onClick={() => disconnect()}
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-bg-tertiary border border-border hover:border-border-hover text-xs font-mono text-text-secondary transition-colors"
+          >
+            <span className="w-2 h-2 rounded-full bg-green-500" />
+            <span className="hidden sm:inline">
+              {publicKey.toBase58().slice(0, 4)}...{publicKey.toBase58().slice(-4)}
+            </span>
+            {balance !== null && (
+              <span className="text-text-muted hidden sm:inline">{balance.toFixed(2)} SOL</span>
+            )}
+          </button>
+        ) : (
+          <button
+            onClick={() => setVisible(true)}
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-accent/20 border border-accent/30 hover:bg-accent/30 text-xs font-medium text-accent-hover transition-colors"
+          >
+            <Wallet size={14} />
+            <span className="hidden sm:inline">Connect Wallet</span>
+          </button>
+        )}
       </div>
     </header>
   );

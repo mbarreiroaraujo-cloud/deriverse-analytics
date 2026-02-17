@@ -92,9 +92,9 @@ export function FeeAnalysis() {
       <div className="h-[140px] sm:h-[180px] mb-4 overflow-hidden rounded-lg">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#1e2a3a" vertical={false} />
-            <XAxis dataKey="date" tick={{ fontSize: 9, fill: '#4a5568' }} tickLine={false} axisLine={false} tickFormatter={(v: string) => v.slice(5)} />
-            <YAxis width={45} tick={{ fontSize: 9, fill: '#4a5568' }} tickLine={false} axisLine={false} tickFormatter={(v: number) => `$${v}`} />
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" vertical={false} />
+            <XAxis dataKey="date" tick={{ fontSize: 9, fill: '#475569' }} tickLine={false} axisLine={false} tickFormatter={(v: string) => v.slice(5)} />
+            <YAxis width={45} tick={{ fontSize: 9, fill: '#475569' }} tickLine={false} axisLine={false} tickFormatter={(v: number) => `$${v}`} />
             <Tooltip
               content={<FeeTooltip />}
               wrapperStyle={{ zIndex: 100, background: 'transparent', border: 'none', boxShadow: 'none', outline: 'none' }}

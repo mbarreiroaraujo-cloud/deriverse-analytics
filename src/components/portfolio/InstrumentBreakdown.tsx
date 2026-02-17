@@ -101,9 +101,9 @@ export function InstrumentBreakdown() {
       <div className="h-[180px] sm:h-[200px] mb-4 overflow-hidden rounded-lg">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={allData} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#1e2a3a" vertical={false} />
-            <XAxis dataKey="name" tick={{ fontSize: 10, fill: '#8892a4' }} tickLine={false} axisLine={false} />
-            <YAxis width={45} tick={{ fontSize: 10, fill: '#4a5568' }} tickLine={false} axisLine={false} tickFormatter={(v: number) => v >= 1000 ? `$${(v/1000).toFixed(0)}K` : `$${v}`} />
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" vertical={false} />
+            <XAxis dataKey="name" tick={{ fontSize: 10, fill: '#94a3b8' }} tickLine={false} axisLine={false} />
+            <YAxis width={45} tick={{ fontSize: 10, fill: '#475569' }} tickLine={false} axisLine={false} tickFormatter={(v: number) => v >= 1000 ? `$${(v/1000).toFixed(0)}K` : `$${v}`} />
             <Tooltip
               content={<CustomTooltip />}
               wrapperStyle={{ zIndex: 100, background: 'transparent', border: 'none', boxShadow: 'none', outline: 'none' }}
