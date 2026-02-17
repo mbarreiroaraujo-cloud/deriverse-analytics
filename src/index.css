@@ -1,16 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  /* Core backgrounds */
-  --bg-primary: #0a0e17;
+  /* Core backgrounds — 4-tier elevation system */
+  --bg-primary: #0b0f19;
   --bg-secondary: #111827;
   --bg-tertiary: #1a2332;
-  --border: #1e2a3a;
+  --bg-elevated: #212d40;
 
-  /* Text hierarchy */
-  --text-primary: #e2e8f0;
-  --text-secondary: #8892a4;
-  --text-muted: #4a5568;
+  /* Borders — softer, more modern */
+  --border: rgba(255, 255, 255, 0.06);
+  --border-hover: rgba(255, 255, 255, 0.12);
+
+  /* Text hierarchy — slightly warmer whites */
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #475569;
 
   /* Trading signals */
   --profit: #22c55e;
@@ -41,7 +45,7 @@ html {
 }
 
 body {
-  font-family: 'DM Sans', 'Segoe UI', system-ui, sans-serif;
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
   background-color: var(--bg-primary);
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
@@ -60,6 +64,11 @@ body {
   font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace !important;
   font-weight: 500;
   letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Tabular numbers for aligned data columns */
+.font-mono, [data-mono] {
   font-variant-numeric: tabular-nums;
 }
 
@@ -172,13 +181,29 @@ body {
 
 /* Card hover effect */
 .card-hover {
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card-hover:hover {
-  border-color: rgba(30, 42, 58, 0.7);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transform: translateY(-1px);
+  border-color: var(--border-hover);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Card accent top gradient line */
+.card-accent {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-accent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0.3;
 }
 
 /* Skeleton loading */
@@ -237,13 +262,15 @@ body {
 }
 
 @theme {
-  --color-bg-primary: #0a0e17;
+  --color-bg-primary: #0b0f19;
   --color-bg-secondary: #111827;
   --color-bg-tertiary: #1a2332;
-  --color-border: #1e2a3a;
-  --color-text-primary: #e2e8f0;
-  --color-text-secondary: #8892a4;
-  --color-text-muted: #4a5568;
+  --color-bg-elevated: #212d40;
+  --color-border: rgba(255, 255, 255, 0.06);
+  --color-border-hover: rgba(255, 255, 255, 0.12);
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #475569;
   --color-profit: #22c55e;
   --color-profit-bg: rgba(34, 197, 94, 0.08);
   --color-loss: #ef4444;
