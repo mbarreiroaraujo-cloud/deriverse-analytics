@@ -32,15 +32,15 @@ export function FilterBar() {
   };
 
   return (
-    <div className="flex items-center gap-2 flex-wrap">
-      <Filter size={14} className="text-text-muted" />
+    <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap mb-1">
+      <Filter size={14} className="text-text-muted shrink-0" />
       {/* Instrument filters — always visible */}
       <div className="flex items-center gap-1">
         {instruments.map(({ key, label, color }) => (
           <button
             key={key}
             onClick={() => toggleInstrument(key)}
-            className={`px-2.5 py-1 rounded text-xs font-medium transition-all ${
+            className={`px-1.5 sm:px-2.5 py-1 rounded text-[11px] sm:text-xs font-medium transition-all ${
               filters.instruments.length === 0 || filters.instruments.includes(key)
                 ? 'text-text-primary bg-bg-tertiary border border-border'
                 : 'text-text-muted bg-bg-secondary border border-transparent opacity-50'

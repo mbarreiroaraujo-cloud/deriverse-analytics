@@ -15,24 +15,24 @@ export function SettingsPage() {
   return (
     <div className="max-w-2xl space-y-8 animate-fade-in px-1 sm:px-0">
       {/* Dashboard Experience */}
-      <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20">
+      <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20">
         <h3 className="text-sm font-semibold text-text-primary mb-2">Dashboard Experience</h3>
         <p className="text-[10px] sm:text-xs text-text-muted mb-5">Choose how much context and education you want to see.</p>
 
         {/* Preset pills */}
-        <div className="flex gap-2 mb-5">
+        <div className="flex gap-1.5 sm:gap-2 mb-5 overflow-x-auto scrollbar-hide">
           {LEVELS.map(({ value, label, desc }) => (
             <button
               key={value}
               onClick={() => setExperienceLevel(value)}
-              className={`flex-1 p-3 rounded-lg text-center transition-all border ${
+              className={`flex-1 min-w-0 p-2 sm:p-3 rounded-lg text-center transition-all border ${
                 experience.level === value
                   ? 'bg-accent/10 border-accent/30 text-accent'
                   : 'bg-bg-primary border-border/50 text-text-muted hover:border-text-muted/30'
               }`}
             >
-              <span className="text-xs font-medium block">{label}</span>
-              <span className="text-[10px] text-text-muted block mt-0.5">{desc}</span>
+              <span className="text-[11px] sm:text-xs font-medium block">{label}</span>
+              <span className="text-[9px] sm:text-[10px] text-text-muted block mt-0.5 line-clamp-2">{desc}</span>
             </button>
           ))}
         </div>
@@ -73,7 +73,7 @@ export function SettingsPage() {
         </div>
       </div>
 
-      <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20">
+      <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20">
         <h3 className="text-sm font-semibold text-text-primary mb-5">Data Summary</h3>
         <div className="space-y-2">
           {[
@@ -90,7 +90,7 @@ export function SettingsPage() {
         </div>
       </div>
 
-      <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20">
+      <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20">
         <h3 className="text-sm font-semibold text-text-primary mb-5">About</h3>
         <p className="text-xs text-text-secondary leading-relaxed">
           Built for the Deriverse ecosystem on Solana. Designed to complement the Deriverse trading experience with institutional-grade analytics.
@@ -102,7 +102,7 @@ export function SettingsPage() {
         </p>
       </div>
 
-      <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20">
+      <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20">
         <h3 className="text-sm font-semibold text-text-primary mb-5">Data Source</h3>
         <div className="flex items-center gap-3 p-3 bg-bg-primary rounded-lg border border-border/50">
           <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
@@ -116,7 +116,7 @@ export function SettingsPage() {
       </div>
 
       {/* Network Status */}
-      <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-6 shadow-sm shadow-black/20">
+      <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-6 shadow-sm shadow-black/20">
         <h3 className="text-sm font-semibold text-text-primary mb-5">Network Status</h3>
         <div className="space-y-3">
           <div className="flex items-center gap-3 p-3 bg-bg-primary rounded-lg border border-border/50">
