@@ -91,7 +91,7 @@ body {
   background: var(--text-muted);
 }
 
-/* Remove focus outlines globally — use :focus-visible for keyboard only */
+/* Remove focus outlines globally — use :focus-visible for keyboard-only navigation */
 *:focus {
   outline: none;
 }
@@ -99,6 +99,11 @@ body {
 *:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+/* Disable mobile tap highlight everywhere */
+* {
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Recharts overrides */
@@ -115,36 +120,49 @@ body {
 
 .recharts-tooltip-wrapper {
   outline: none !important;
-  /* Kill Recharts default white background */
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
 }
 
-/* Also override the default Recharts tooltip container */
 .recharts-default-tooltip {
   background: var(--bg-tertiary) !important;
   border-color: var(--border) !important;
   border-radius: 8px !important;
 }
 
-/* Ensure custom tooltip pointer events work on mobile */
+/* Kill ALL Recharts focus/outline/border artifacts */
 .recharts-tooltip-wrapper:focus,
-.recharts-tooltip-wrapper:focus-visible {
-  outline: none !important;
-}
-
-/* Kill Recharts surface/wrapper focus rectangle */
+.recharts-tooltip-wrapper:focus-visible,
+.recharts-surface,
 .recharts-surface:focus,
-.recharts-wrapper:focus,
 .recharts-surface:focus-visible,
+.recharts-wrapper,
+.recharts-wrapper:focus,
 .recharts-wrapper:focus-visible {
   outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  -webkit-tap-highlight-color: transparent !important;
 }
 
-/* Remove any focus box on SVG chart elements */
-svg:focus, svg *:focus {
+/* Remove any focus/active box on SVG chart elements */
+svg:focus, svg *:focus,
+svg:focus-visible, svg *:focus-visible,
+svg:active, svg *:active {
   outline: none !important;
+  box-shadow: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Remove Recharts active cursor rectangle highlight */
+.recharts-active-shape,
+.recharts-bar-rectangle:focus,
+.recharts-bar-rectangle:active,
+.recharts-area:focus,
+.recharts-area:active {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 /* Animation utilities */
