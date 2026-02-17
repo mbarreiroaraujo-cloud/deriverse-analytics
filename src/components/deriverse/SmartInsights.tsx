@@ -20,7 +20,7 @@ export function SmartInsights() {
   if (insights.length === 0) return null;
 
   return (
-    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl shadow-sm shadow-black/20 overflow-hidden">
+    <div className="bg-bg-secondary/80 border border-border/50 rounded-2xl shadow-sm shadow-black/20 overflow-hidden card-accent">
       <button
         onClick={() => setExpanded(!expanded)}
         className="w-full flex items-center justify-between p-4 sm:p-5 hover:bg-bg-tertiary/30 transition-colors"
