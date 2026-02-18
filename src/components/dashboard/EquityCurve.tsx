@@ -69,7 +69,7 @@ export function EquityCurve() {
         </div>
       </div>
 
-      <div className="h-[200px] sm:h-[300px] overflow-hidden rounded-lg">
+      <div className="h-[220px] sm:h-[300px] overflow-hidden rounded-lg">
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart data={data} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
             <defs>

@@ -18,7 +18,7 @@ export function CardTimeRange({ value, onChange, options = [7, 14, 30, 90, 180, 
         <button
           key={days}
           onClick={() => onChange(days)}
-          className={`text-[9px] font-mono px-1.5 py-0.5 rounded transition-colors whitespace-nowrap ${
+          className={`text-[10px] font-mono px-2 py-1 rounded transition-colors whitespace-nowrap ${
             value === days
               ? 'text-accent font-semibold bg-accent/10'
               : 'text-text-muted/50 hover:text-text-muted'

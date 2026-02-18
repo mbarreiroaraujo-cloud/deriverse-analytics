@@ -57,7 +57,7 @@ export function PerformanceHeatmap() {
 
       <div className="overflow-x-auto scroll-smooth-touch">
         {/* CSS Grid layout for alignment */}
-        <div className="grid grid-cols-8 gap-0.5 sm:gap-1" style={{ minWidth: '280px' }}>
+        <div className="grid grid-cols-8 gap-0.5 sm:gap-1">
           {/* Header row: empty corner + day labels */}
           <div className="w-8 sm:w-12" />
           {DAYS_FULL.map((day, i) => (
@@ -81,7 +81,7 @@ export function PerformanceHeatmap() {
                 return (
                   <div
                     key={`${block}-${day}`}
-                    className={`w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-sm ${getHeatColor(value, maxVal)} flex items-center justify-center group relative cursor-default transition-all hover:ring-1 hover:ring-text-muted/30`}
+                    className={`w-7 h-7 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-sm ${getHeatColor(value, maxVal)} flex items-center justify-center group relative cursor-default transition-all hover:ring-1 hover:ring-text-muted/30`}
                   >
                     <span className="text-[8px] sm:text-[9px] font-mono font-medium text-text-primary/0 group-hover:text-text-primary/80 transition-colors">
                       {value >= 0 ? '+' : ''}{value.toFixed(0)}

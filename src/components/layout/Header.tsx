@@ -50,7 +50,7 @@ export function Header() {
         </button>
 
         <Calendar size={14} className="text-text-muted hidden sm:block" />
-        <div className="flex items-center gap-1 bg-bg-primary rounded-md p-0.5 overflow-x-auto scrollbar-hide">
+        <div className="flex items-center gap-1 bg-bg-primary rounded-md p-0.5 overflow-x-auto scrollbar-hide min-w-0 flex-shrink">
           {periods.map(({ label, days }) => (
             <button
               key={label}

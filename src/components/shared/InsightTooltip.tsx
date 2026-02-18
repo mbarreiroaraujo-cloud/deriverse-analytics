@@ -94,7 +94,7 @@ export function InsightTooltip({ metric, value, children }: InsightTooltipProps)
             transition={{ duration: 0.15 }}
             className={`absolute z-[60] left-0 ${
               position === 'bottom' ? 'top-full mt-2' : 'bottom-full mb-2'
-            } w-[280px] sm:w-[320px] bg-bg-primary border border-border/70 rounded-xl p-4 shadow-xl`}
+            } max-w-[85vw] sm:w-[320px] bg-bg-primary border border-border/70 rounded-xl p-4 shadow-xl`}
             onMouseEnter={() => { if (hoverTimeout.current) clearTimeout(hoverTimeout.current); }}
             onMouseLeave={handleMouseLeave}
           >

@@ -22,7 +22,7 @@ export function SavingsBanner() {
         <p className="text-[11px] sm:text-sm font-medium text-accent">
           Save ~${monthlySaving.toFixed(0)}/month on fees
         </p>
-        <p className="text-[10px] text-text-muted truncate">
+        <p className="text-[10px] text-text-muted">
           Deriverse subscription could save you ${potentialSaving.toFixed(0)} over 90 days
         </p>
       </div>

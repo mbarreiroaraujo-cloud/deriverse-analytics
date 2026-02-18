@@ -20,7 +20,7 @@ export function TabSection({ tabs, defaultTab }: TabSectionProps) {
   return (
     <div>
       {/* Horizontal pills — all screen sizes */}
-      <div className="flex gap-1.5 sm:gap-2 overflow-x-auto px-0 py-3 scrollbar-hide sticky top-14 z-20 bg-bg-primary">
+      <div className="flex gap-1.5 sm:gap-2 overflow-x-auto px-0 py-3 scrollbar-hide bg-bg-primary">
         {tabs.map(tab => (
           <button
             key={tab.id}

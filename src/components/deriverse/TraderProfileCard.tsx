@@ -116,7 +116,7 @@ export function TraderProfileCard() {
             <User size={14} className="text-accent" />
             <h4 className="text-xs font-semibold text-text-primary">Style Evolution</h4>
           </div>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {profile.evolution.map((e, i) => (
               <div key={i} className="text-center p-2.5 bg-bg-primary/50 rounded-lg border border-border/30">
                 <span className="text-[10px] text-text-muted block mb-1">{e.period}</span>
