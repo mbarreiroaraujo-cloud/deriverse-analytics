@@ -10,7 +10,7 @@ export function FeesPage() {
       id: 'breakdown',
       label: 'Breakdown',
       content: (
-        <div className="space-y-4 sm:space-y-6">
+        <div className="space-y-5 sm:space-y-6">
           <FeeAnalysis />
         </div>
       ),
@@ -19,7 +19,7 @@ export function FeesPage() {
       id: 'optimizer',
       label: 'Optimizer',
       content: (
-        <div className="space-y-4 sm:space-y-6">
+        <div className="space-y-5 sm:space-y-6">
           <FeeSimulator />
         </div>
       ),
@@ -28,7 +28,7 @@ export function FeesPage() {
       id: 'funding',
       label: 'Funding',
       content: (
-        <div className="space-y-4 sm:space-y-6">
+        <div className="space-y-5 sm:space-y-6">
           <FundingRatePnL />
         </div>
       ),

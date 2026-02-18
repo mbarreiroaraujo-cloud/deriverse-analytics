@@ -22,7 +22,7 @@ export function DashboardPage() {
       id: 'overview',
       label: 'Overview',
       content: (
-        <div className="space-y-4 sm:space-y-6">
+        <div className="space-y-5 sm:space-y-6">
           {experience.showSavingsBanner && <SavingsBanner />}
           {experience.showSmartInsights && <SmartInsights />}
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-5">
@@ -41,7 +41,7 @@ export function DashboardPage() {
       id: 'analysis',
       label: 'Analysis',
       content: (
-        <div className="space-y-4 sm:space-y-6">
+        <div className="space-y-5 sm:space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5">
             <PerformanceHeatmap />
             <DirectionalBias />
@@ -54,7 +54,7 @@ export function DashboardPage() {
       id: 'fees-risk',
       label: 'Fees & Risk',
       content: (
-        <div className="space-y-4 sm:space-y-6">
+        <div className="space-y-5 sm:space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5">
             <FeeAnalysis />
             <RollingMetrics />

@@ -32,7 +32,7 @@ export function MetricCard({ title, value, subtitle, icon, trend, trendValue, va
 
   return (
     <div
-      className={`bg-bg-secondary/80 border border-border/50 rounded-2xl p-3 sm:p-5 shadow-sm shadow-black/20 card-hover card-accent transition-all duration-500 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
+      className={`bg-bg-secondary/80 border border-border/50 rounded-2xl p-4 sm:p-5 shadow-sm shadow-black/20 card-hover card-accent transition-all duration-500 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
     >
       <div className="flex items-center justify-between mb-2">
         {metric && metricValue !== undefined && experience.showInsightTooltips ? (
@@ -44,7 +44,7 @@ export function MetricCard({ title, value, subtitle, icon, trend, trendValue, va
         )}
         {icon && <span className="text-text-muted">{icon}</span>}
       </div>
-      <div className={`font-mono text-sm sm:text-lg lg:text-xl font-semibold ${colorClass} mb-1 break-all`}>
+      <div className={`font-mono text-base sm:text-lg lg:text-xl font-semibold ${colorClass} mb-1 break-all`}>
         {value}
       </div>
       <div className="flex items-center gap-2">
