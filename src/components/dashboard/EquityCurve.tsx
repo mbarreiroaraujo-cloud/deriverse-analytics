@@ -60,7 +60,7 @@ export function EquityCurve() {
           <CardTimeRange value={localDays} onChange={setLocalDays} options={[7, 30, 90, 180, 365]} />
           <button
             onClick={() => setShowDrawdown(!showDrawdown)}
-            className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors ${
+            className={`px-2 py-1 rounded-lg text-[10px] sm:text-xs font-medium transition-colors ${
               showDrawdown ? 'bg-accent/15 text-accent border border-accent/20' : 'text-text-muted border border-border/50'
             }`}
           >

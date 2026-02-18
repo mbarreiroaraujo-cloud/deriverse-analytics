@@ -100,7 +100,7 @@ export function FeeSimulator() {
       <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-5">
         <div className="text-center p-2 sm:p-3 bg-bg-primary rounded-lg border border-border/50">
           <span className="text-[10px] text-text-muted uppercase block mb-1">Current Fees</span>
-          <span className="text-sm sm:text-lg font-mono font-bold text-text-primary">{formatFee(currentFees, true)}</span>
+          <span className="text-xs sm:text-lg font-mono font-bold text-text-primary">{formatFee(currentFees, true)}</span>
         </div>
         <div className="flex items-center justify-center">
           <ArrowRight size={16} className="text-text-muted sm:hidden" />
@@ -108,7 +108,7 @@ export function FeeSimulator() {
         </div>
         <div className="text-center p-2 sm:p-3 bg-bg-primary rounded-lg border border-border/50">
           <span className="text-[10px] text-text-muted uppercase block mb-1">With {tier.name}</span>
-          <span className="text-sm sm:text-lg font-mono font-bold text-accent">{formatFee(totalWithSub, true)}</span>
+          <span className="text-xs sm:text-lg font-mono font-bold text-accent">{formatFee(totalWithSub, true)}</span>
         </div>
       </div>
 
